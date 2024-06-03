@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Food List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Food List</h1>
+    <ul class="list-group">
+        {% for food in foods %}
+            <li class="list-group-item">
+                <a href="{% url 'food_detail' food.id %}">{{ food.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

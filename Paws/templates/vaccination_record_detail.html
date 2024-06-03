@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Vaccination Record{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Vaccination Record Details</h1>
+    <p><strong>Dog:</strong> {{ vaccination_record.dog.name }}</p>
+    <!-- Display other fields as needed -->
+    <a href="{% url 'vaccination_record_list' %}" class="btn btn-secondary">Back to Vaccination Records</a>
+    <a href="{% url 'vaccination_record_update' vaccination_record.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'vaccination_record_delete' vaccination_record.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

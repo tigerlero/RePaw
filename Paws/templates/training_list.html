@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Trainings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Trainings</h1>
+    <ul class="list-group">
+        {% for training in trainings %}
+            <li class="list-group-item">
+                <a href="{% url 'training_detail' training.id %}">{{ training.training_type }} - {{ training.date }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

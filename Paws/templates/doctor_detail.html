@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Dr. {{ doctor.first_name }} {{ doctor.last_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h1>
+    <p><strong>Specialty:</strong> {{ doctor.specialty }}</p>
+    <p><strong>Phone Number:</strong> {{ doctor.phone_number }}</p>
+    <p><strong>Email:</strong> {{ doctor.email }}</p>
+    <p><strong>Clinic Address:</strong> {{ doctor.clinic_address }}</p>
+    <a href="{% url 'doctor_list' %}" class="btn btn-secondary">Back to Doctors List</a>
+    <a href="{% url 'doctor_update' doctor.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'doctor_delete' doctor.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

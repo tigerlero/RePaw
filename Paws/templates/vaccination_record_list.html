@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Vaccination Records{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Vaccination Records</h1>
+    <ul class="list-group">
+        {% for vaccination_record in vaccination_records %}
+            <li class="list-group-item">
+                <a href="{% url 'vaccination_record_detail' vaccination_record.id %}">{{ vaccination_record.dog.name }} - {{ vaccination_record.vaccine_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

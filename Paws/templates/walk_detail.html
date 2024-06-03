@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Walk on {{ walk.date }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Walk Details</h1>
+    <p><strong>Dog:</strong> {{ walk.dog.name }}</p>
+    <p><strong>Walker:</strong> {{ walk.walker }}</p>
+    <p><strong>Date:</strong> {{ walk.date }}</p>
+    <p><strong>Duration:</strong> {{ walk.duration }}</p>
+    <a href="{% url 'walk_list' %}" class="btn btn-secondary">Back to Walks List</a>
+    <a href="{% url 'walk_update' walk.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'walk_delete' walk.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

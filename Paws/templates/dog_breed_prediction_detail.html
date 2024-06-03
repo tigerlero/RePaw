@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Dog Breed Prediction{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Dog Breed Prediction Details</h1>
+    <!-- Display prediction details -->
+    <a href="{% url 'dog_breed_prediction_list' %}" class="btn btn-secondary">Back to Predictions</a>
+    <a href="{% url 'dog_breed_prediction_update' prediction.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'dog_breed_prediction_delete' prediction.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

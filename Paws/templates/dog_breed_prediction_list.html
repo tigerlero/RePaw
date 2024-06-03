@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Dog Breed Predictions{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Dog Breed Predictions</h1>
+    <ul class="list-group">
+        {% for prediction in predictions %}
+            <li class="list-group-item">
+                <a href="{% url 'dog_breed_prediction_detail' prediction.id %}">Prediction for {{ prediction.related_dog.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

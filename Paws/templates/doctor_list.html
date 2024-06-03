@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctors{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Doctors</h1>
+    <ul class="list-group">
+        {% for doctor in doctors %}
+            <li class="list-group-item">
+                <a href="{% url 'doctor_detail' doctor.id %}">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

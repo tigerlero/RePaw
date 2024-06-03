@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ event.name }}</h1>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Events List</a>
+    <a href="{% url 'event_update' event.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

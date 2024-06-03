@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Appointment Details</h1>
+    <p><strong>Dog:</strong> {{ appointment.dog.name }}</p>
+    <!-- Display other fields as needed -->
+    <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Back to Appointments</a>
+    <a href="{% url 'appointment_update' appointment.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'appointment_delete' appointment.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

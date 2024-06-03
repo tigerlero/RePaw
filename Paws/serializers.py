@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
-    PredictionRating
+from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile
 from .models import Owner, Shelter, Doctor, Appointment, VaccinationRecord, Event
 
 
@@ -99,12 +98,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
-
-
-class PredictionRatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PredictionRating
-        fields = '__all__'
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

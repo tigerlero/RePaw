@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Microchips{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Microchips</h1>
+    <ul class="list-group">
+        {% for microchip in microchips %}
+            <li class="list-group-item">
+                <a href="{% url 'microchip_detail' microchip.id %}">{{ microchip.id_number }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

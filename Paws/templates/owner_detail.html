@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ owner.first_name }} {{ owner.last_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ owner.first_name }} {{ owner.last_name }}</h1>
+    <p><strong>Email:</strong> {{ owner.email }}</p>
+    <p><strong>Phone Number:</strong> {{ owner.phone_number }}</p>
+    <a href="{% url 'owner_list' %}" class="btn btn-secondary">Back to Owners List</a>
+    <a href="{% url 'owner_update' owner.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'owner_delete' owner.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Dog Breed Prediction{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Delete Dog Breed Prediction</h1>
+    <p>Are you sure you want to delete this dog breed prediction?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'dog_breed_prediction_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

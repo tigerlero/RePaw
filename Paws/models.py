@@ -12,6 +12,19 @@ class Food(models.Model):
     name = models.CharField(max_length=100)
     ingredients = models.TextField()
     recommended_breeds = models.ManyToManyField(Breed)
+    nutritional_content = models.TextField(default='Not specified',
+                                           help_text="Detailed nutritional content of the food")
+    suitable_for_age_groups = models.CharField(max_length=100, default='All',
+                                               help_text="Age groups like puppy, adult, senior")
+    dietary_restrictions = models.TextField(blank=True, help_text="Any dietary restrictions this food addresses")
+    weight_management = models.BooleanField(default=False, help_text="Is this food suitable for weight management?")
+    dental_health = models.BooleanField(default=False, help_text="Is this food beneficial for dental health?")
+    skin_and_coat_health = models.BooleanField(default=False,
+                                               help_text="Is this food beneficial for skin and coat health?")
+    digestion_health = models.BooleanField(default=False, help_text="Is this food beneficial for digestion health?")
+
+    def __str__(self):
+        return self.name
 
 
 class FriendlySpot(models.Model):
@@ -108,8 +121,23 @@ class Training(models.Model):
 class Health(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     checkup_date = models.DateTimeField()
-    notes = models.TextField()
+    weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    temperature = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    heart_rate = models.PositiveIntegerField(null=True, blank=True)
+    blood_pressure = models.CharField(max_length=20, null=True, blank=True)
+    respiratory_rate = models.PositiveIntegerField(null=True, blank=True)
+    dental_health = models.CharField(max_length=100, null=True, blank=True)
+    skin_condition = models.TextField(blank=True)
+    digestive_health = models.TextField(blank=True)
+    musculoskeletal_health = models.TextField(blank=True)
+    vision = models.CharField(max_length=100, null=True, blank=True)
+    hearing = models.CharField(max_length=100, null=True, blank=True)
+    allergies = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
     veterinarian = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Health record of {self.dog.name}"
 
 
 class Appointment(models.Model):
@@ -138,19 +166,19 @@ class DogBreedPrediction(models.Model):
     confidence = models.FloatField()
     prediction_date = models.DateTimeField(auto_now_add=True)
     related_dog = models.ForeignKey(Dog, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)], null=True, blank=True)
+    comments = models.TextField(blank=True)
+    model_used = models.CharField(max_length=100, null=True, blank=True)
+    image_processing_details = models.TextField(blank=True)
+    validation_status = models.BooleanField(default=False)
+    location = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('verified', 'Verified'), ('disputed', 'Disputed')], default='pending')
+    confidence_threshold = models.FloatField(default=0.5)
+    metadata = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Prediction: {self.predicted_breed} with confidence {self.confidence}"
-
-
-class PredictionRating(models.Model):
-    prediction = models.ForeignKey(DogBreedPrediction, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField()  # Assuming rating is an integer, e.g., 1-5
-    feedback = models.TextField(blank=True, null=True)  # Optional feedback
-
-    def __str__(self):
-        return f"Rating by {self.user.username} for prediction {self.prediction.id}: {self.rating}"
+        return f"Prediction for {self.related_dog.name} ({self.prediction_date})"
 
 
 class UserProfile(models.Model):
@@ -168,6 +196,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
 
 
 

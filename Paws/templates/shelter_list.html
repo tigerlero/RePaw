@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Shelters{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Shelters</h1>
+    <ul class="list-group">
+        {% for shelter in shelters %}
+            <li class="list-group-item">
+                <a href="{% url 'shelter_detail' shelter.id %}">{{ shelter.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

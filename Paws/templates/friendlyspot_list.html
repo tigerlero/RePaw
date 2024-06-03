@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Friendly Spots{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Friendly Spots</h1>
+    <ul class="list-group">
+        {% for spot in spots %}
+            <li class="list-group-item">
+                <a href="{% url 'friendlyspot_detail' spot.id %}">{{ spot.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

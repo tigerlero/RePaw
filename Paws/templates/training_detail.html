@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Training on {{ training.date }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Training Details</h1>
+    <p><strong>Dog:</strong> {{ training.dog.name }}</p>
+    <p><strong>Training Type:</strong> {{ training.training_type }}</p>
+    <p><strong>Date:</strong> {{ training.date }}</p>
+    <p><strong>Notes:</strong> {{ training.notes }}</p>
+    <a href="{% url 'training_list' %}" class="btn btn-secondary">Back to Trainings List</a>
+    <a href="{% url 'training_update' training.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'training_delete' training.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

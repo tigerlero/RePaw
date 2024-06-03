@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ breed.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ breed.name }}</h1>
+    <p>{{ breed.characteristics }}</p>
+    <a href="{% url 'breed_list' %}" class="btn btn-secondary">Back to Breeds</a>
+    <a href="{% url 'update_breed' breed.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'delete_breed' breed.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

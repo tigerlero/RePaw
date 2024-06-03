@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ shelter.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ shelter.name }}</h1>
+    <p><strong>Location:</strong> {{ shelter.location }}</p>
+    <p><strong>Phone Number:</strong> {{ shelter.phone_number }}</p>
+    <p><strong>Email:</strong> {{ shelter.email }}</p>
+    <a href="{% url 'shelter_list' %}" class="btn btn-secondary">Back to Shelters List</a>
+    <a href="{% url 'shelter_update' shelter.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'shelter_delete' shelter.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

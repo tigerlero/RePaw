@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Health Record{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Health Record</h1>
+    <p><strong>Dog:</strong> {{ health_record.dog.name }}</p>
+    <!-- Display other fields as needed -->
+    <a href="{% url 'health_list' %}" class="btn btn-secondary">Back to Health Records</a>
+    <a href="{% url 'health_update' health_record.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'health_delete' health_record.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ breed.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Delete {{ breed.name }}</h1>
+    <p>Are you sure you want to delete the breed "{{ breed.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'breed_detail' breed.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

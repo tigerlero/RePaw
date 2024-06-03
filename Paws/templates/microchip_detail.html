@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Microchip {{ microchip.id_number }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Microchip {{ microchip.id_number }}</h1>
+    <p><strong>ID Number:</strong> {{ microchip.id_number }}</p>
+    <p><strong>Registration Date:</strong> {{ microchip.registration_date }}</p>
+    <p><strong>Dog:</strong> {{ microchip.dog.name }}</p>
+    <a href="{% url 'microchip_list' %}" class="btn btn-secondary">Back to Microchips List</a>
+    <a href="{% url 'microchip_update' microchip.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'microchip_delete' microchip.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}
