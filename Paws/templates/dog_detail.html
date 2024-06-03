@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ dog.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ dog.name }}</h1>
+    <p>Breed: {{ dog.breed }}</p>
+    <p>Age: {{ dog.age }}</p>
+    <p>Description: {{ dog.description }}</p>
+    <p>Adoption Status: {{ dog.adoption_status|yesno:"Available,Adopted" }}</p>
+    {% if dog.owner %}
+    <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+    {% endif %}
+    {% if dog.shelter %}
+    <p>Shelter: {{ dog.shelter.name }}</p>
+    {% endif %}
+    <!-- Add more detailed fields if necessary -->
+</div>
+{% endblock %}

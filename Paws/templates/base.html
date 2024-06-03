@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add custom styles here -->
+    <style>
+        /* Add custom styles here */
+        body {
+            padding-top: 80px; /* Adjust based on your navbar height */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'home' %}">My Website</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dogs_list' %}">Dogs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'walks_list' %}">Walks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'breeds_list' %}">Breeds</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'trainings_list' %}">Trainings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'healths_list' %}">Health Records</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'foods_list' %}">Foods</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friendlyspots_list' %}">Friendly Spots</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'owners_list' %}">Owners</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'shelters_list' %}">Shelters</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctors_list' %}">Doctors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'appointments_list' %}">Appointments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'vaccinationrecords_list' %}">Vaccination Records</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'events_list' %}">Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'microchips_list' %}">Microchips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'predictions_list' %}">Predictions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'predictionratings_list' %}">Prediction Ratings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'userprofiles_list' %}">User Profiles</a>
+            </li>
+            <!-- Add more links as needed -->
+        </ul>
+    </div>
+</nav>
+
+    <!-- Page content -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 My Website</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Add custom scripts here -->
+</body>
+</html>
