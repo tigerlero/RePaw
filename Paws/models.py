@@ -35,13 +35,10 @@ class FriendlySpot(models.Model):
 
 
 class Owner(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15)
+    number_of_dogs = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.number_of_dogs}"
 
 
 class Shelter(models.Model):
@@ -55,15 +52,11 @@ class Shelter(models.Model):
 
 
 class Doctor(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
     clinic_address = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"Dr. {self.first_name} {self.last_name}"
+        return f"Speciality and address. {self.specialty} {self.clinic_address}"
 
 
 class Event(models.Model):
@@ -106,20 +99,37 @@ class Microchip(models.Model):
 
 class Walk(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    walker = models.CharField(max_length=100)
+    walker = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField()
     duration = models.DurationField()
+    sitter_required = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Walk for {self.dog.name} on {self.date}"
+
+
+class Command(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Training(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     training_type = models.CharField(max_length=100)
+    trainer_name = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField()
     notes = models.TextField()
+    commands = models.ManyToManyField(Command, blank=True)
+
+    def __str__(self):
+        return f"{self.training_type} training for {self.dog.name} on {self.date}"
 
 
 class Health(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    is_sick = models.BooleanField(default=False)
     checkup_date = models.DateTimeField()
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     temperature = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
@@ -173,7 +183,9 @@ class DogBreedPrediction(models.Model):
     image_processing_details = models.TextField(blank=True)
     validation_status = models.BooleanField(default=False)
     location = models.CharField(max_length=100, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('verified', 'Verified'), ('disputed', 'Disputed')], default='pending')
+    status = models.CharField(max_length=20,
+                              choices=[('pending', 'Pending'), ('verified', 'Verified'), ('disputed', 'Disputed')],
+                              default='pending')
     confidence_threshold = models.FloatField(default=0.5)
     metadata = models.TextField(blank=True)
 
@@ -187,6 +199,10 @@ class UserProfile(models.Model):
         ('shelter', 'Shelter'),
         ('general', 'General'),
     )
+    first_name = models.CharField(max_length=100, default="")
+    last_name = models.CharField(max_length=100, default="")
+    email = models.EmailField(unique=True, null=True)
+    phone_number = models.CharField(max_length=15, default="")
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
@@ -198,7 +214,15 @@ class UserProfile(models.Model):
         return f"{self.user.username} - {self.role}"
 
 
+class Groomer(models.Model):
+    groomer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    address = models.CharField(max_length=255)
 
 
-
-
+class Grooming(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    groomer = models.ForeignKey(Groomer, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    notes = models.TextField()

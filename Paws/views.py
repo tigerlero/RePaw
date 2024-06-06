@@ -8,7 +8,7 @@ from rest_framework import viewsets
 
 from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, ShelterForm, DoctorForm, EventForm, \
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
-    UserProfileForm
+    UserProfileForm, GroomingForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer
@@ -104,8 +104,24 @@ def dog_detail(request, dog_id):
 
 
 def dogs_list(request):
-    dogs = Dog.objects.all()
-    return render(request, 'dogs_list.html', {'dogs': dogs})
+    dogs_for_adoption = Dog.objects.filter(adoption_status=False)
+    adopted_dogs = Dog.objects.filter(adoption_status=True)
+    dogs_needing_walks_or_sitters = Dog.objects.filter(walk__sitter_required=True).distinct()
+    sick_dogs = Dog.objects.filter(health__is_sick=True)
+    modeling_dogs = Dog.objects.filter(health__is_sick=False)
+    most_trained_dogs = Dog.objects.filter(health__is_sick=False)
+    trainers_dogs = Dog.objects.filter(health__is_sick=False)
+
+    context = {
+        'dogs_for_adoption': dogs_for_adoption,
+        'adopted_dogs': adopted_dogs,
+        'dogs_needing_walks_or_sitters': dogs_needing_walks_or_sitters,
+        'sick_dogs': sick_dogs,
+        'modeling_dogs': modeling_dogs,
+        'most_trained_dogs': most_trained_dogs,
+        'trainers_dogs': trainers_dogs,
+    }
+    return render(request, 'dogs_list.html', context)
 
 
 def create_dog(request):
@@ -610,6 +626,7 @@ def create_walk(request):
         form = WalkForm()
     return render(request, 'create_walk.html', {'form': form})
 
+
 def create_breed(request):
     if request.method == 'POST':
         form = BreedForm(request.POST)
@@ -619,3 +636,25 @@ def create_breed(request):
     else:
         form = BreedForm()
     return render(request, 'create_breed.html', {'form': form})
+
+
+def create_grooming(request):
+    if request.method == 'POST':
+        form = GroomingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dogs_list')
+    else:
+        form = GroomingForm()
+    return render(request, 'create_grooming.html', {'form': form})
+
+
+def create_training(request):
+    if request.method == 'POST':
+        form = TrainingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dogs_list')
+    else:
+        form = TrainingForm()
+    return render(request, 'create_training.html', {'form': form})

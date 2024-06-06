@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Dog, Breed, Food, FriendlySpot, Owner, Shelter, Doctor, Event, Microchip, Walk, Training, Health, \
-    Appointment, VaccinationRecord, DogBreedPrediction
+    Appointment, VaccinationRecord, DogBreedPrediction, Grooming
 
 
 class DogForm(forms.ModelForm):
@@ -99,3 +99,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+
+class GroomingForm(forms.ModelForm):
+    class Meta:
+        model = Grooming
+        fields = '__all__'

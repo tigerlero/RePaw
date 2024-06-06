@@ -4,9 +4,12 @@
 
 {% block content %}
 <div class="container">
-    <h1>Dogs Available for Adoption</h1>
+    <h1>Dogs</h1>
+    <a href="{% url 'create_dog' %}" class="btn btn-primary mb-4">Create New Dog</a>
+
+    <h2>Dogs for Adoption</h2>
     <div class="row">
-        {% for dog in dogs %}
+        {% for dog in dogs_for_adoption %}
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
@@ -22,6 +25,198 @@
                     {% endif %}
                     {% if dog.shelter %}
                     <p>Shelter: {{ dog.shelter.name }}</p>
+                    {% endif %}
+                    {% if dog.training_set.all %}
+                    <p>Training:
+                        {% for training in dog.training_set.all %}
+                            {{ training.training_type }} ({{ training.date }}) - Commands:
+                            {% for command in training.commands.all %}
+                                {{ command.name }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if dog.grooming_set.all %}
+                    <p>Grooming:
+                        {% for grooming in dog.grooming_set.all %}
+                            {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Sick Dogs</h2>
+    <div class="row">
+        {% for dog in sick_dogs %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        Breed: {{ dog.breed }}<br>
+                        Age: {{ dog.age }}<br>
+                        Description: {{ dog.description }}<br>
+                        Sickness Details: {{ dog.health.sickness_details }}<br>
+                    </p>
+                    {% if dog.owner %}
+                    <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+                    {% endif %}
+                    {% if dog.shelter %}
+                    <p>Shelter: {{ dog.shelter.name }}</p>
+                    {% endif %}
+                    {% if dog.training_set.all %}
+                    <p>Training:
+                        {% for training in dog.training_set.all %}
+                            {{ training.training_type }} ({{ training.date }}) - Commands:
+                            {% for command in training.commands.all %}
+                                {{ command.name }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if dog.grooming_set.all %}
+                    <p>Grooming:
+                        {% for grooming in dog.grooming_set.all %}
+                            {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Modeling Dogs</h2>
+    <div class="row">
+        {% for dog in modeling_dogs %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        Breed: {{ dog.breed }}<br>
+                        Age: {{ dog.age }}<br>
+                        Description: {{ dog.description }}<br>
+                    </p>
+                    {% if dog.owner %}
+                    <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+                    {% endif %}
+                    {% if dog.shelter %}
+                    <p>Shelter: {{ dog.shelter.name }}</p>
+                    {% endif %}
+                    {% if dog.training_set.all %}
+                    <p>Training:
+                        {% for training in dog.training_set.all %}
+                            {{ training.training_type }} ({{ training.date }}) - Commands:
+                            {% for command in training.commands.all %}
+                                {{ command.name }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if dog.grooming_set.all %}
+                    <p>Grooming:
+                        {% for grooming in dog.grooming_set.all %}
+                            {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Most Trained Dogs</h2>
+    <div class="row">
+        {% for dog in most_trained_dogs %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        Breed: {{ dog.breed }}<br>
+                        Age: {{ dog.age }}<br>
+                        Description: {{ dog.description }}<br>
+                    </p>
+                    {% if dog.owner %}
+                    <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+                    {% endif %}
+                    {% if dog.shelter %}
+                    <p>Shelter: {{ dog.shelter.name }}</p>
+                    {% endif %}
+                    {% if dog.training_set.all %}
+                    <p>Training:
+                        {% for training in dog.training_set.all %}
+                            {{ training.training_type }} ({{ training.date }}) - Commands:
+                            {% for command in training.commands.all %}
+                                {{ command.name }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if dog.grooming_set.all %}
+                    <p>Grooming:
+                        {% for grooming in dog.grooming_set.all %}
+                            {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Trainer's Dogs</h2>
+    <div class="row">
+        {% for dog in trainers_dogs %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        Breed: {{ dog.breed }}<br>
+                        Age: {{ dog.age }}<br>
+                        Description: {{ dog.description }}<br>
+                    </p>
+                    {% if dog.owner %}
+                    <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+                    {% endif %}
+                    {% if dog.shelter %}
+                    <p>Shelter: {{ dog.shelter.name }}</p>
+                    {% endif %}
+                    {% if dog.training_set.all %}
+                    <p>Training:
+                        {% for training in dog.training_set.all %}
+                            {{ training.training_type }} ({{ training.date }}) - Commands:
+                            {% for command in training.commands.all %}
+                                {{ command.name }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if dog.grooming_set.all %}
+                    <p>Grooming:
+                        {% for grooming in dog.grooming_set.all %}
+                            {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+                        {% endfor %}
+                    </p>
                     {% endif %}
                 </div>
             </div>
