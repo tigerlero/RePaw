@@ -1,17 +1,23 @@
+from django.contrib.auth import login as auth_login, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 # Create your views here.
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, ShelterForm, DoctorForm, EventForm, \
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
-    UserProfileForm, GroomingForm, AdoptionForm
-from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile
+    UserProfileForm, GroomingForm, AdoptionForm, RegisterForm
+from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
+    Adoption, Grooming, Groomer
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
-    FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer
+    FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
+    AdoptionSerializer, GroomingSerializer, GroomerSerializer
 
 from .models import Owner, Shelter, Doctor, Appointment, VaccinationRecord, Event
 from .serializers import OwnerSerializer, ShelterSerializer, DoctorSerializer, AppointmentSerializer, \
@@ -97,6 +103,53 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
+
+@api_view(['GET', 'POST'])
+def adoption_list(request):
+    if request.method == 'GET':
+        adoptions = Adoption.objects.all()
+        serializer = AdoptionSerializer(adoptions, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = AdoptionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+def groomer_list(request):
+    if request.method == 'GET':
+        groomers = Groomer.objects.all()
+        serializer = GroomerSerializer(groomers, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = GroomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+def grooming_list(request):
+    if request.method == 'GET':
+        groomings = Grooming.objects.all()
+        serializer = GroomingSerializer(groomings, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = GroomingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#  Web views
 
 def dog_detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
@@ -673,3 +726,53 @@ def adoption_form(request):
 
 def adoptionSuccess(request):
     return render(request, 'adoptionSuccess.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user_profile = UserProfile.objects.create(
+                user=user,
+                is_shelter=form.cleaned_data.get('is_shelter'),
+                is_owner=form.cleaned_data.get('is_owner'),
+                is_doctor=form.cleaned_data.get('is_doctor'),
+                is_walker=form.cleaned_data.get('is_walker'),
+                is_sitter=form.cleaned_data.get('is_sitter'),
+                is_groomer=form.cleaned_data.get('is_groomer'),
+            )
+            user_profile.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect(reverse(''))
+
+
+

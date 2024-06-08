@@ -14,7 +14,8 @@ from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, Healt
     appointment_delete, vaccination_record_list, vaccination_record_detail, vaccination_record_update, \
     vaccination_record_delete, dog_breed_prediction_list, dog_breed_prediction_detail, dog_breed_prediction_update, \
     dog_breed_prediction_delete, user_profile, user_profile_list, user_profile_update, user_profile_delete, walks_list, \
-    create_walk, adoption_form, adoptionSuccess
+    create_walk, adoption_form, adoptionSuccess, adoption_list, groomer_list, grooming_list, register, login_view, \
+    custom_logout
 from .views import OwnerViewSet, ShelterViewSet, DoctorViewSet, AppointmentViewSet, VaccinationRecordViewSet, EventViewSet
 from django.views.generic import TemplateView
 
@@ -107,5 +108,13 @@ urlpatterns = [
     path('profiles/<int:profile_id>/delete/', user_profile_delete, name='user_profile_delete'),
     path('adoption/', adoption_form, name='adoption_form'),
     path('success/', adoptionSuccess, name='adoptionSuccess'),
+    path('register/', register, name='register'),
+    path('login/', login_view, name='login'),
+    path('logout/', custom_logout, name='logout'),
+    # serializer view
+    path('api/adoptions/', adoption_list, name='adoption_list'),
+    path('api/groomers/', groomer_list, name='groomer_list'),
+    path('api/groomings/', grooming_list, name='grooming_list'),
+
 
 ]

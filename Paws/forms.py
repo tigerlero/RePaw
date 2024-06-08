@@ -1,8 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from .models import Dog, Breed, Food, FriendlySpot, Owner, Shelter, Doctor, Event, Microchip, Walk, Training, Health, \
-    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption
+    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption, UserProfile
 
 
 class DogForm(forms.ModelForm):
@@ -105,6 +106,44 @@ class GroomingForm(forms.ModelForm):
     class Meta:
         model = Grooming
         fields = '__all__'
+
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100, required=True)
+    phone_number = forms.CharField(max_length=15, required=True)
+    is_shelter = forms.BooleanField(required=False)
+    is_owner = forms.BooleanField(required=False)
+    is_doctor = forms.BooleanField(required=False)
+    is_walker = forms.BooleanField(required=False)
+    is_sitter = forms.BooleanField(required=False)
+    is_groomer = forms.BooleanField(required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2',
+                  'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        if commit:
+            user.save()
+            user_profile = UserProfile.objects.create(
+                user=user,
+                phone_number=self.cleaned_data['phone_number'],
+                is_shelter=self.cleaned_data['is_shelter'],
+                is_owner=self.cleaned_data['is_owner'],
+                is_doctor=self.cleaned_data['is_doctor'],
+                is_walker=self.cleaned_data['is_walker'],
+                is_sitter=self.cleaned_data['is_sitter'],
+                is_groomer=self.cleaned_data['is_groomer'],
+            )
+            user_profile.save()
+        return user
 
 
 class AdoptionForm(forms.ModelForm):

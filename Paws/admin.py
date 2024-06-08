@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Owner, Shelter, Doctor, Appointment, \
-    VaccinationRecord, Event, Microchip, DogBreedPrediction, UserProfile
+    VaccinationRecord, Event, Microchip, DogBreedPrediction, UserProfile, Grooming, Adoption, Groomer
 
 admin.site.register(Dog)
 admin.site.register(Walk)
@@ -18,3 +18,6 @@ admin.site.register(Event)
 admin.site.register(Microchip)
 admin.site.register(DogBreedPrediction)
 admin.site.register(UserProfile)
+admin.site.register(Grooming)
+admin.site.register(Adoption)
+admin.site.register(Groomer)

@@ -195,32 +195,34 @@ class DogBreedPrediction(models.Model):
         return f"Prediction for {self.related_dog.name} ({self.prediction_date})"
 
 
+class Groomer(models.Model):
+    groomer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    address = models.CharField(max_length=255)
+
+
 class UserProfile(models.Model):
-    ROLE_CHOICES = (
-        ('owner', 'Owner'),
-        ('shelter', 'Shelter'),
-        ('general', 'General'),
-    )
     first_name = models.CharField(max_length=100, default="")
     last_name = models.CharField(max_length=100, default="")
     email = models.EmailField(unique=True, null=True)
     phone_number = models.CharField(max_length=15, default="")
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
-    owner = models.OneToOneField(Owner, on_delete=models.SET_NULL, null=True, blank=True)
+    is_owner = models.BooleanField(default=False)
+    is_shelter = models.BooleanField(default=False)
+    is_doctor = models.BooleanField(default=False)
+    is_walker = models.BooleanField(default=False)
+    is_sitter = models.BooleanField(default=False)
+    is_groomer = models.BooleanField(default=False)
 
+    owner = models.OneToOneField(Owner, on_delete=models.SET_NULL, null=True, blank=True)
     shelter = models.OneToOneField(Shelter, on_delete=models.SET_NULL, null=True, blank=True)
+    doctor = models.OneToOneField(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    groomer = models.OneToOneField(Groomer, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.role}"
-
-
-class Groomer(models.Model):
-    groomer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    phone = models.CharField(max_length=20)
-    email = models.EmailField()
-    address = models.CharField(max_length=255)
+        return f"{self.user.username} - Profile"
 
 
 class Grooming(models.Model):
@@ -250,7 +252,8 @@ class Adoption(models.Model):
     allergies = models.BooleanField()
 
     # Home Information
-    home_type = models.CharField(max_length=50, choices=[('House', 'Μονοκατοικία'), ('Apartment', 'Πολυκατοικία'), ('Other', 'Άλλο')])
+    home_type = models.CharField(max_length=50,
+                                 choices=[('House', 'Μονοκατοικία'), ('Apartment', 'Πολυκατοικία'), ('Other', 'Άλλο')])
     fence_height = models.FloatField()
     escape_possibility = models.BooleanField()
 
