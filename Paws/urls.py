@@ -14,7 +14,7 @@ from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, Healt
     appointment_delete, vaccination_record_list, vaccination_record_detail, vaccination_record_update, \
     vaccination_record_delete, dog_breed_prediction_list, dog_breed_prediction_detail, dog_breed_prediction_update, \
     dog_breed_prediction_delete, user_profile, user_profile_list, user_profile_update, user_profile_delete, walks_list, \
-    create_walk
+    create_walk, adoption_form, adoptionSuccess
 from .views import OwnerViewSet, ShelterViewSet, DoctorViewSet, AppointmentViewSet, VaccinationRecordViewSet, EventViewSet
 from django.views.generic import TemplateView
 
@@ -105,5 +105,7 @@ urlpatterns = [
     path('profiles/', user_profile_list, name='user_profile_list'),
     path('profiles/<int:profile_id>/update/', user_profile_update, name='user_profile_update'),
     path('profiles/<int:profile_id>/delete/', user_profile_delete, name='user_profile_delete'),
+    path('adoption/', adoption_form, name='adoption_form'),
+    path('success/', adoptionSuccess, name='adoptionSuccess'),
 
 ]

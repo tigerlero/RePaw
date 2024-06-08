@@ -70,8 +70,10 @@ class Event(models.Model):
 
 
 class Dog(models.Model):
+    SEX_CHOICES = [("M", "Male"), ("F", "Female")]
     name = models.CharField(max_length=100)
     age = models.IntegerField()
+    sex = models.CharField(choices=SEX_CHOICES, max_length=1, blank=True)
     breed = models.CharField(max_length=100)
     description = models.TextField()
     adoption_status = models.BooleanField(default=False)
@@ -226,3 +228,60 @@ class Grooming(models.Model):
     groomer = models.ForeignKey(Groomer, on_delete=models.CASCADE)
     date = models.DateTimeField()
     notes = models.TextField()
+
+
+class Adoption(models.Model):
+    # Personal Information
+    name = models.CharField(max_length=100)
+    birth_date = models.DateField()
+    email = models.EmailField()
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=10)
+    home_phone = models.CharField(max_length=15, blank=True, null=True)
+    work_phone = models.CharField(max_length=15, blank=True, null=True)
+    mobile_phone = models.CharField(max_length=15)
+    facebook_profile = models.URLField(blank=True, null=True)
+    instagram_profile = models.URLField(blank=True, null=True)
+
+    # Family Information
+    adults_in_home = models.PositiveIntegerField()
+    children_info = models.TextField()  # Example: "2 children, ages 5 and 8"
+    allergies = models.BooleanField()
+
+    # Home Information
+    home_type = models.CharField(max_length=50, choices=[('House', 'Μονοκατοικία'), ('Apartment', 'Πολυκατοικία'), ('Other', 'Άλλο')])
+    fence_height = models.FloatField()
+    escape_possibility = models.BooleanField()
+
+    # Pet Information
+    current_pets = models.TextField(blank=True, null=True)
+    past_pets = models.TextField(blank=True, null=True)
+    abandoned_pet = models.BooleanField()
+    adopted_before = models.BooleanField()
+
+    # Desired Pet Information
+    adoption_reason = models.CharField(max_length=255)
+    family_agreement = models.BooleanField()
+    caretaker_info = models.TextField()
+    plan_to_neuter = models.BooleanField()
+    if_not_neuter_reason = models.TextField(blank=True, null=True)
+    pet_location_day_home = models.CharField(max_length=255)
+    pet_location_day_away = models.CharField(max_length=255)
+    pet_location_night = models.CharField(max_length=255)
+    pet_location_long_absence = models.CharField(max_length=255)
+    walk_time = models.CharField(max_length=255)
+    alone_time = models.PositiveIntegerField()
+    moving_plan = models.TextField()
+    bad_behavior_response = models.TextField()
+
+    # Desired Pet Characteristics
+    preferences = models.TextField(blank=True, null=True)
+    pet_character = models.TextField()
+    willing_to_host_special_needs = models.TextField()
+    additional_info = models.TextField(blank=True, null=True)
+
+    accepted_terms = models.BooleanField()
+
+    def __str__(self):
+        return self.name

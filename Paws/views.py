@@ -8,7 +8,7 @@ from rest_framework import viewsets
 
 from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, ShelterForm, DoctorForm, EventForm, \
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
-    UserProfileForm, GroomingForm
+    UserProfileForm, GroomingForm, AdoptionForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer
@@ -658,3 +658,18 @@ def create_training(request):
     else:
         form = TrainingForm()
     return render(request, 'create_training.html', {'form': form})
+
+
+def adoption_form(request):
+    if request.method == 'POST':
+        form = AdoptionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adoptionSuccess')
+    else:
+        form = AdoptionForm()
+    return render(request, 'adoption_form.html', {'form': form})
+
+
+def adoptionSuccess(request):
+    return render(request, 'adoptionSuccess.html')
