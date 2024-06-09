@@ -12,9 +12,9 @@ from rest_framework.response import Response
 
 from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, ShelterForm, DoctorForm, EventForm, \
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
-    UserProfileForm, GroomingForm, AdoptionForm, RegisterForm
+    UserProfileForm, GroomingForm, AdoptionForm, RegisterForm, TrainerForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
-    Adoption, Grooming, Groomer, Walker, Sitter
+    Adoption, Grooming, Groomer, Walker, Sitter, Testimonial, Resource, Trainer
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
     AdoptionSerializer, GroomingSerializer, GroomerSerializer
@@ -157,8 +157,8 @@ def dog_detail(request, dog_id):
 
 
 def dogs_list(request):
-    dogs_for_adoption = Dog.objects.filter(adoption_status=False)
-    adopted_dogs = Dog.objects.filter(adoption_status=True)
+    dogs_for_adoption = Dog.objects.filter(is_not_adopted=True)
+    adopted_dogs = Dog.objects.filter(is_not_adopted=False)
     dogs_needing_walks_or_sitters = Dog.objects.filter(walk__sitter_required=True).distinct()
     sick_dogs = Dog.objects.filter(health__is_sick=True)
     modeling_dogs = Dog.objects.filter(health__is_sick=False)
@@ -179,7 +179,7 @@ def dogs_list(request):
 
 def create_dog(request):
     if request.method == 'POST':
-        form = DogForm(request.POST)
+        form = DogForm(request.POST, request.FILES,)
         if form.is_valid():
             form.save()
             return redirect(reverse('dogs_list'))
@@ -191,7 +191,7 @@ def create_dog(request):
 def update_dog(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
     if request.method == 'POST':
-        form = DogForm(request.POST, instance=dog)
+        form = DogForm(request.POST, request.FILES, instance=dog)
         if form.is_valid():
             form.save()
             return redirect(reverse('dog_detail', args=[dog.id]))
@@ -731,7 +731,7 @@ def adoptionSuccess(request):
 
 def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST, request.FILES,)
         if form.is_valid():
             user = form.save()
 
@@ -750,6 +750,7 @@ def register(request):
                 is_walker=form.cleaned_data.get('is_walker'),
                 is_sitter=form.cleaned_data.get('is_sitter'),
                 is_groomer=form.cleaned_data.get('is_groomer'),
+                is_trainer=form.cleaned_data.get('is_trainer'),
             )
             userprofile.save()
             if userprofile.is_doctor:
@@ -764,6 +765,8 @@ def register(request):
                 Sitter.objects.create(userprofile=userprofile)
             if userprofile.is_groomer:
                 Groomer.objects.create(userprofile=userprofile)
+            if userprofile.is_trainer:
+                Trainer.objects.create(userprofile=userprofile)
             return redirect('/')
     else:
         form = RegisterForm()
@@ -803,6 +806,66 @@ def groomers_list(request):
 def sitters_list(request):
     sitters = UserProfile.objects.filter(is_sitter=True).prefetch_related('sitter_profile')
     return render(request, 'sitters_list.html', {'sitters': sitters})
+
+
+def home(request):
+    dogs = Dog.objects.all()
+    events = Event.objects.all()
+    testimonials = Testimonial.objects.all()
+
+    context = {
+        'dogs': dogs,
+        'events': events,
+        'testimonials': testimonials,
+    }
+
+    return render(request, 'homepage.html', context)
+
+
+def resource_detail(request, slug):
+    resource = get_object_or_404(Resource, slug=slug)
+    return render(request, 'resource_detail.html', {'resource': resource})
+
+
+def trainers_list(request):
+    trainers = Trainer.objects.all()
+    return render(request, 'trainers_list.html', {'trainers': trainers})
+
+
+def trainer_detail(request, trainer_id):
+    trainer = get_object_or_404(Trainer, id=trainer_id)
+    return render(request, 'trainer_detail.html', {'trainer': trainer})
+
+
+def create_trainer(request):
+    if request.method == 'POST':
+        form = TrainerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('trainers_list')
+    else:
+        form = TrainerForm()
+    return render(request, 'create_trainer.html', {'form': form})
+
+
+def update_trainer(request, trainer_id):
+    trainer = get_object_or_404(Trainer, id=trainer_id)
+    if request.method == 'POST':
+        form = TrainerForm(request.POST, request.FILES, instance=trainer)
+        if form.is_valid():
+            form.save()
+            return redirect('trainer_detail', trainer_id=trainer.id)
+    else:
+        form = TrainerForm(instance=trainer)
+    return render(request, 'update_trainer.html', {'form': form, 'trainer': trainer})
+
+
+def delete_trainer(request, trainer_id):
+    trainer = get_object_or_404(Trainer, id=trainer_id)
+    if request.method == 'POST':
+        trainer.delete()
+        return redirect('trainers_list')
+    return render(request, 'delete_trainer.html', {'trainer': trainer})
 
 
 def create_breeds():

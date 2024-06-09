@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Trainers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Trainers</h1>
+    <a href="{% url 'create_trainer' %}" class="btn btn-primary mb-3">Add New Trainer</a>
+    <div class="row">
+        {% for trainer in trainers %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                {% if trainer.profile_image %}
+                <img src="{{ trainer.profile_image.url }}" class="card-img-top breed-img" alt="{{ trainer.name }}">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top breed-img" alt="Default trainer Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ trainer.name }}</h5>
+                    <p class="card-text">Specialties: {{ trainer.specialties|truncatewords:20 }}</p>
+                    <a href="{% url 'trainer_detail' trainer.id %}" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Add a New Dog{% endblock %}
 
 {% block content %}
 <div class="container">
     <h1>Add a New Dog</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Save</button>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Dogs{% endblock %}
 
 {% block content %}
@@ -12,13 +12,14 @@
         {% for dog in dogs_for_adoption %}
         <div class="col-md-4">
             <div class="card mb-4">
+                <img src="{{ dog.image.url }}" class="card-img-top" alt="{{ dog.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ dog.name }}</h5>
                     <p class="card-text">
                         Breed: {{ dog.breed }}<br>
                         Age: {{ dog.age }}<br>
                         Description: {{ dog.description }}<br>
-                        Adoption Status: {{ dog.adoption_status|yesno:"Available,Adopted" }}
+                        Adoption Status: {{ dog.is_not_adopted|yesno:"Available,Adopted" }}
                     </p>
                     {% if dog.owner %}
                     <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
@@ -56,6 +57,7 @@
         {% for dog in sick_dogs %}
         <div class="col-md-4">
             <div class="card mb-4">
+                <img src="{{ dog.image.url }}" class="card-img-top" alt="{{ dog.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ dog.name }}</h5>
                     <p class="card-text">

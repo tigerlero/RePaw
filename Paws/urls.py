@@ -17,7 +17,8 @@ from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, Healt
     vaccination_record_delete, dog_breed_prediction_list, dog_breed_prediction_detail, dog_breed_prediction_update, \
     dog_breed_prediction_delete, user_profile, user_profile_list, user_profile_update, user_profile_delete, walks_list, \
     create_walk, adoption_form, adoptionSuccess, adoption_list, groomer_list, grooming_list, register, login_view, \
-    custom_logout, walkers_list, groomers_list, sitters_list
+    custom_logout, walkers_list, groomers_list, sitters_list, home, resource_detail, trainers_list, create_trainer, \
+    trainer_detail, update_trainer, delete_trainer
 from .views import OwnerViewSet, ShelterViewSet, DoctorViewSet, AppointmentViewSet, VaccinationRecordViewSet, EventViewSet
 from django.views.generic import TemplateView
 
@@ -41,8 +42,7 @@ router.register(r'userprofiles', UserProfileViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('', TemplateView.as_view(template_name='homepage.html'), name='home'),
-    path('dogs/', dogs_list, name='dogs_list'),
+    path('', home, name='home'),    path('dogs/', dogs_list, name='dogs_list'),
     path('dogs/<int:dog_id>/', dog_detail, name='dog_detail'),
     path('dogs/create/', create_dog, name='create_dog'),
     path('dogs/update/<int:dog_id>/', update_dog, name='update_dog'),
@@ -116,6 +116,12 @@ urlpatterns = [
     path('logout/', custom_logout, name='logout'),
     path('groomers/', groomers_list, name='groomers_list'),
     path('sitters/', sitters_list, name='sitters_list'),
+    path('resources/<slug:slug>/', resource_detail, name='resource_detail'),
+    path('trainers/', trainers_list, name='trainers_list'),
+    path('trainers/<int:trainer_id>/', trainer_detail, name='trainer_detail'),
+    path('trainers/create/', create_trainer, name='create_trainer'),
+    path('trainers/<int:trainer_id>/update/', update_trainer, name='update_trainer'),
+    path('trainers/<int:trainer_id>/delete/', delete_trainer, name='delete_trainer'),
     # serializer view
     path('api/adoptions/', adoption_list, name='adoption_list'),
     path('api/groomers/', groomer_list, name='groomer_list'),

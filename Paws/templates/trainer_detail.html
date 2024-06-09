@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ trainer.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ trainer.name }}</h1>
+    {% if trainer.profile_image %}
+    <img src="{{ trainer.profile_image.url }}" class="img-fluid mb-3" alt="{{ trainer.name }}">
+    {% else %}
+    <img src="{% static 'images/default.jpg' %}" class="img-fluid mb-3" alt="Default trainer Image">
+    {% endif %}
+    <p><strong>Email:</strong> {{ trainer.email }}</p>
+    <p><strong>Phone Number:</strong> {{ trainer.phone_number }}</p>
+    <p><strong>Experience Years:</strong> {{ trainer.experience_years }}</p>
+    <p><strong>Specialties:</strong> {{ trainer.specialties }}</p>
+    <a href="{% url 'trainers_list' %}" class="btn btn-secondary">Back to Trainers</a>
+    <a href="{% url 'update_trainer' trainer.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'delete_trainer' trainer.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

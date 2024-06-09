@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from .models import Dog, Breed, Food, FriendlySpot, Owner, Shelter, Doctor, Event, Microchip, Walk, Training, Health, \
-    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption, UserProfile
+    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption, UserProfile, Trainer
 
 
 class DogForm(forms.ModelForm):
@@ -122,7 +122,8 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2', 'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer']
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2',
+                  'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -134,6 +135,10 @@ class RegisterForm(UserCreationForm):
         return user
 
 
+class TrainerForm(forms.ModelForm):
+    class Meta:
+        model = Trainer
+        fields = '__all__'
 
 
 class AdoptionForm(forms.ModelForm):

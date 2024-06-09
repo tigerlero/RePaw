@@ -86,6 +86,7 @@ class UserProfile(models.Model):
     is_walker = models.BooleanField(default=False)
     is_sitter = models.BooleanField(default=False)
     is_groomer = models.BooleanField(default=False)
+    is_trainer = models.BooleanField(default=False)
 
     owner = models.OneToOneField('Owner', on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='owner_profile')
@@ -99,6 +100,8 @@ class UserProfile(models.Model):
                                   related_name='sitter_profile')
     groomer = models.OneToOneField('Groomer', on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name='groomer_profile')
+    trainer = models.OneToOneField('Trainer', on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name='trainer_profile')
 
     def __str__(self):
         return f"{self.user} - {self.first_name} {self.last_name}"
@@ -224,7 +227,7 @@ class Dog(models.Model):
     sex = models.CharField(choices=SEX_CHOICES, max_length=1, blank=True)
     breed = models.CharField(max_length=100)
     description = models.TextField()
-    adoption_status = models.BooleanField(default=False)
+    is_not_adopted = models.BooleanField(default=False)
     owner = models.ForeignKey(Owner, on_delete=models.SET_NULL, null=True, blank=True)
     shelter = models.ForeignKey(Shelter, on_delete=models.SET_NULL, null=True, blank=True)
     weight = models.FloatField(null=True, blank=True)
@@ -232,6 +235,7 @@ class Dog(models.Model):
     color = models.CharField(max_length=100, null=True, blank=True)
     eye_color = models.CharField(max_length=50, null=True, blank=True)
     last_known_location = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(upload_to='dog_images/', default='breed_images/default.jpg', null=True, blank=True)  # Specify default image path
 
     def __str__(self):
         return self.name
@@ -341,3 +345,26 @@ class Grooming(models.Model):
     groomer = models.ForeignKey(Groomer, on_delete=models.CASCADE)
     date = models.DateTimeField()
     notes = models.TextField()
+
+
+class Testimonial(models.Model):
+    content = models.TextField()
+    author = models.CharField(max_length=100)
+
+
+class Resource(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Trainer(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='trainer_profile')
+    experience_years = models.IntegerField()
+    specialties = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.experience_years

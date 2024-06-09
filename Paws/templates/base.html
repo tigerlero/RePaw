@@ -4,70 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RePaw{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <!-- Add custom styles here -->
     <style>
-        /* Add custom styles here */
-        body {
-            padding-top: 80px; /* Adjust based on your navbar height */
-        }
+    body {
+        padding-top: 80px; /* Adjust based on your navbar height */
+    }
+    .breed-img {
+    width: 100%; /* Ensure the image takes up the full width of its container */
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Cover ensures the aspect ratio is maintained while covering the entire area */
+    object-position: center; /* Center the image within the container */
+    }
+
+
+    .aspect-ratio-16-9 {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 ratio */
+    }
+
+    .aspect-ratio-16-9 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}">RePaw</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'dogs_list' %}">Dogs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'breeds_list' %}">Breeds</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'walkers_list' %}">Walkers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'sitters_list' %}">Sitters</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'groomers_list' %}">Groomers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'doctors_list' %}">Doctors</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'shelters_list' %}">Shelters</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'events_list' %}">Events</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'friendlyspots_list' %}">Friendly Spots</a>
-            </li>
-            {% if user.is_authenticated %}
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #a96d3e">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">RePaw</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav-link" href="{% url 'dogs_list' %}">Dogs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link" href="{% url 'breeds_list' %}">Breeds</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'walkers_list' %}">Walkers</a>
                 </li>
-            {% endif %}
-        </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sitters_list' %}">Sitters</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'groomers_list' %}">Groomers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'doctors_list' %}">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shelters_list' %}">Shelters</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events_list' %}">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'friendlyspots_list' %}">Friendly Spots</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
-
 
     <!-- Page content -->
     <div class="container">
@@ -83,9 +105,9 @@
     </footer>
 
     <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Add custom scripts here -->
 </body>
 </html>

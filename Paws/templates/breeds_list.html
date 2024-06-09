@@ -3,18 +3,21 @@
 
 {% block title %}Breeds{% endblock %}
 
+
 {% block content %}
 <div class="container">
     <h1>Dog Breeds</h1>
     <div class="row">
         {% for breed in breeds %}
-        <div class="col-md-4">
-            <div class="card mb-4">
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="aspect-ratio-16-9">
                 {% if breed.image %}
-                <img src="{{ breed.image.url }}" class="card-img-top" alt="{{ breed.name }}">
+                <img src="{{ breed.image.url }}" class=" breed-img img-thumbnail rounded" alt="{{ breed.name }}">
                 {% else %}
-                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default breed Image">
+                <img src="{% static 'images/default.jpg' %}" class=" breed-img img-thumbnail rounded" alt="Default breed Image">
                 {% endif %}
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ breed.name }}</h5>
                     <p class="card-text">{{ breed.characteristics|truncatewords:20 }}</p>
