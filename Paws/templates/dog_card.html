@@ -1,0 +1,48 @@
+<!-- dog_card.html -->
+<div class="col-md-3">
+    <div class="card mb-3">
+    <img src="{{ dog.image.url }}" class="img-thumbnail rounded" alt="{{ dog.name }}">
+    <div class="card-body">
+        <h5 class="card-title">{{ dog.name }}</h5>
+        <p class="card-text">
+            Breed: {{ dog.breed }}<br>
+            Age: {{ dog.age }}<br>
+            Description: {{ dog.description }}<br>
+            Adoption Status: {{ dog.is_not_adopted|yesno:"Available,Adopted" }}
+        </p>
+        {% if dog.owner %}
+        <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+        {% endif %}
+        {% if dog.shelter %}
+        <p>Shelter: {{ dog.shelter.name }}</p>
+        {% endif %}
+        {% if dog.training_set.all %}
+        <p>Training:
+            {% for training in dog.training_set.all %}
+                {{ training.training_type }} ({{ training.date }}) - Commands:
+                {% for command in training.commands.all %}
+                    {{ command.name }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if dog.grooming_set.all %}
+        <p>Grooming:
+            {% for grooming in dog.grooming_set.all %}
+                {{ grooming.date }} by {{ grooming.groomer.first_name }} {{ grooming.groomer.last_name }}<br>
+            {% endfor %}
+        </p>
+        {% endif %}
+        <!-- Adoption button if the dog is available for adoption -->
+        {% if dog.is_not_adopted %}
+        <a href="{% url 'adoption_form' %}" class="btn btn-success mr-2"><i class="fas fa-paw"></i> Adopt</a>
+        {% endif %}
+        <!-- Donate button -->
+        <a href="https://buy.stripe.com/eVabIKe3X94IfO83cc" class="btn btn-info"><i class="fas fa-donate"></i></a>
+        <!-- Walk button -->
+        <a href="#" class="btn btn-info"><i class="fas fa-walking"></i></a>
+    </div>
+</div>
+</div>

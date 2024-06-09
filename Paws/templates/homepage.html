@@ -11,18 +11,8 @@
             {% for dog in dogs %}
             {% if dog.is_not_adopted %}
 
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="aspect-ratio-16-9">
-                        <img src="{{ dog.image.url }}" class="card-img-top breed-img" alt="{{ dog.name }}">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ dog.name }}</h5>
-                        <p class="card-text">{{ dog.breed }}</p>
-                        <a href="{% url 'dog_detail' dog.id %}" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+                {% include 'dog_card_2.html' with dog=dog %}
+
             {% endif %}
             {% endfor %}
         </div>

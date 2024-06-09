@@ -215,6 +215,8 @@ class Shelter(models.Model):
     phone_number = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
     capacity = models.IntegerField(blank=True, null=True)
+    iban = models.CharField(max_length=34, null=True, blank=True)  # Assuming IBAN is a string of maximum 34 characters
+
 
     def __str__(self):
         return self.name
