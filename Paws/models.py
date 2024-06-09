@@ -4,8 +4,29 @@ from django.db import models
 
 # Create your models here.
 class Breed(models.Model):
-    name = models.CharField(max_length=100)
+    SHEDDING_CHOICES = [
+        ('low', 'Low'),
+        ('moderate', 'Moderate'),
+        ('high', 'High'),
+        ('none', 'None'),
+    ]
+    name = models.CharField(max_length=100, unique=True)
     characteristics = models.TextField()
+    temperament = models.CharField(max_length=200, blank=True, null=True)
+    origin = models.CharField(max_length=200, blank=True, null=True)
+    lifespan = models.CharField(max_length=50, blank=True, null=True)
+    size = models.CharField(max_length=50, blank=True, null=True)
+    coat_length = models.CharField(max_length=50, blank=True, null=True)
+    shedding = models.CharField(max_length=20, choices=SHEDDING_CHOICES, default='low')
+    exercise_needs = models.CharField(max_length=100, blank=True, null=True)
+    trainability = models.CharField(max_length=100, blank=True, null=True)
+    health_issues = models.TextField(blank=True, null=True)
+    special_needs = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='breed_images/', default='breed_images/default.jpg', null=True, blank=True)  # Specify default image path
+
+
+    def __str__(self):
+        return self.name
 
 
 class Food(models.Model):
@@ -34,36 +55,163 @@ class FriendlySpot(models.Model):
     dog_friendly = models.BooleanField(default=True)
 
 
-class Owner(models.Model):
-    number_of_dogs = models.IntegerField(default=0)
+class Event(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    date = models.DateTimeField()
+    location = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.number_of_dogs}"
+        return self.name
 
 
-class Shelter(models.Model):
+class Command(models.Model):
     name = models.CharField(max_length=100)
-    location = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, default="")
+    last_name = models.CharField(max_length=100, default="")
+    email = models.EmailField(unique=True, null=True)
+    phone_number = models.CharField(max_length=15, default="")
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)  # Add this line
+
+    is_owner = models.BooleanField(default=False)
+    is_shelter = models.BooleanField(default=False)
+    is_doctor = models.BooleanField(default=False)
+    is_walker = models.BooleanField(default=False)
+    is_sitter = models.BooleanField(default=False)
+    is_groomer = models.BooleanField(default=False)
+
+    owner = models.OneToOneField('Owner', on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name='owner_profile')
+    shelter = models.OneToOneField('Shelter', on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name='shelter_profile')
+    doctor = models.OneToOneField('Doctor', on_delete=models.SET_NULL, null=True, blank=True,
+                                  related_name='doctor_profile')
+    walker = models.OneToOneField('Walker', on_delete=models.SET_NULL, null=True, blank=True,
+                                  related_name='walker_profile')
+    sitter = models.OneToOneField('Sitter', on_delete=models.SET_NULL, null=True, blank=True,
+                                  related_name='sitter_profile')
+    groomer = models.OneToOneField('Groomer', on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name='groomer_profile')
+
+    def __str__(self):
+        return f"{self.user} - {self.first_name} {self.last_name}"
+
+
+class Adoption(models.Model):
+    # Personal Information
+    name = models.CharField(max_length=100)
+    birth_date = models.DateField()
+    email = models.EmailField()
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=10)
+    home_phone = models.CharField(max_length=15, blank=True, null=True)
+    work_phone = models.CharField(max_length=15, blank=True, null=True)
+    mobile_phone = models.CharField(max_length=15)
+    facebook_profile = models.URLField(blank=True, null=True)
+    instagram_profile = models.URLField(blank=True, null=True)
+
+    # Family Information
+    adults_in_home = models.PositiveIntegerField()
+    children_info = models.TextField()  # Example: "2 children, ages 5 and 8"
+    allergies = models.BooleanField()
+
+    # Home Information
+    home_type = models.CharField(max_length=50,
+                                 choices=[('House', 'Μονοκατοικία'), ('Apartment', 'Πολυκατοικία'), ('Other', 'Άλλο')])
+    fence_height = models.FloatField()
+    escape_possibility = models.BooleanField()
+
+    # Pet Information
+    current_pets = models.TextField(blank=True, null=True)
+    past_pets = models.TextField(blank=True, null=True)
+    abandoned_pet = models.BooleanField()
+    adopted_before = models.BooleanField()
+
+    # Desired Pet Information
+    adoption_reason = models.CharField(max_length=255)
+    family_agreement = models.BooleanField()
+    caretaker_info = models.TextField()
+    plan_to_neuter = models.BooleanField()
+    if_not_neuter_reason = models.TextField(blank=True, null=True)
+    pet_location_day_home = models.CharField(max_length=255)
+    pet_location_day_away = models.CharField(max_length=255)
+    pet_location_night = models.CharField(max_length=255)
+    pet_location_long_absence = models.CharField(max_length=255)
+    walk_time = models.CharField(max_length=255)
+    alone_time = models.PositiveIntegerField()
+    moving_plan = models.TextField()
+    bad_behavior_response = models.TextField()
+
+    # Desired Pet Characteristics
+    preferences = models.TextField(blank=True, null=True)
+    pet_character = models.TextField()
+    willing_to_host_special_needs = models.TextField()
+    additional_info = models.TextField(blank=True, null=True)
+
+    accepted_terms = models.BooleanField()
 
     def __str__(self):
         return self.name
 
 
 class Doctor(models.Model):
-    specialty = models.CharField(max_length=100)
-    clinic_address = models.CharField(max_length=200)
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='doctor_profile')
+    speciality = models.CharField(max_length=100, blank=True, null=True)
+    clinic_address = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"Speciality and address. {self.specialty} {self.clinic_address}"
+        return f"Dr. {self.userprofile.first_name} {self.userprofile.last_name}"
 
 
-class Event(models.Model):
+class Groomer(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='groomer_profile')
+    grooming_experience_years = models.IntegerField(blank=True, null=True)
+
+    # Add any other fields relevant to groomers
+
+    def __str__(self):
+        return f"{self.userprofile.first_name} {self.userprofile.last_name}"
+
+
+class Walker(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='walker_profile')
+    walking_experience_years = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.userprofile.first_name} {self.userprofile.last_name}"
+
+
+class Sitter(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='sitter_profile')
+    experience_years = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.userprofile.first_name} {self.userprofile.last_name}"
+
+
+class Owner(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='owner_profile')
+    number_of_dogs = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.userprofile.first_name} {self.userprofile.last_name}"
+
+
+class Shelter(models.Model):
+    userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='shelter_profile')
     name = models.CharField(max_length=100)
-    description = models.TextField()
-    date = models.DateTimeField()
     location = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField(unique=True)
+    capacity = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -108,13 +256,6 @@ class Walk(models.Model):
 
     def __str__(self):
         return f"Walk for {self.dog.name} on {self.date}"
-
-
-class Command(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 
 class Training(models.Model):
@@ -195,96 +336,8 @@ class DogBreedPrediction(models.Model):
         return f"Prediction for {self.related_dog.name} ({self.prediction_date})"
 
 
-class Groomer(models.Model):
-    groomer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    phone = models.CharField(max_length=20)
-    email = models.EmailField()
-    address = models.CharField(max_length=255)
-
-
-class UserProfile(models.Model):
-    first_name = models.CharField(max_length=100, default="")
-    last_name = models.CharField(max_length=100, default="")
-    email = models.EmailField(unique=True, null=True)
-    phone_number = models.CharField(max_length=15, default="")
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_owner = models.BooleanField(default=False)
-    is_shelter = models.BooleanField(default=False)
-    is_doctor = models.BooleanField(default=False)
-    is_walker = models.BooleanField(default=False)
-    is_sitter = models.BooleanField(default=False)
-    is_groomer = models.BooleanField(default=False)
-
-    owner = models.OneToOneField(Owner, on_delete=models.SET_NULL, null=True, blank=True)
-    shelter = models.OneToOneField(Shelter, on_delete=models.SET_NULL, null=True, blank=True)
-    doctor = models.OneToOneField(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
-    groomer = models.OneToOneField(Groomer, on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.user.username} - Profile"
-
-
 class Grooming(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     groomer = models.ForeignKey(Groomer, on_delete=models.CASCADE)
     date = models.DateTimeField()
     notes = models.TextField()
-
-
-class Adoption(models.Model):
-    # Personal Information
-    name = models.CharField(max_length=100)
-    birth_date = models.DateField()
-    email = models.EmailField()
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=10)
-    home_phone = models.CharField(max_length=15, blank=True, null=True)
-    work_phone = models.CharField(max_length=15, blank=True, null=True)
-    mobile_phone = models.CharField(max_length=15)
-    facebook_profile = models.URLField(blank=True, null=True)
-    instagram_profile = models.URLField(blank=True, null=True)
-
-    # Family Information
-    adults_in_home = models.PositiveIntegerField()
-    children_info = models.TextField()  # Example: "2 children, ages 5 and 8"
-    allergies = models.BooleanField()
-
-    # Home Information
-    home_type = models.CharField(max_length=50,
-                                 choices=[('House', 'Μονοκατοικία'), ('Apartment', 'Πολυκατοικία'), ('Other', 'Άλλο')])
-    fence_height = models.FloatField()
-    escape_possibility = models.BooleanField()
-
-    # Pet Information
-    current_pets = models.TextField(blank=True, null=True)
-    past_pets = models.TextField(blank=True, null=True)
-    abandoned_pet = models.BooleanField()
-    adopted_before = models.BooleanField()
-
-    # Desired Pet Information
-    adoption_reason = models.CharField(max_length=255)
-    family_agreement = models.BooleanField()
-    caretaker_info = models.TextField()
-    plan_to_neuter = models.BooleanField()
-    if_not_neuter_reason = models.TextField(blank=True, null=True)
-    pet_location_day_home = models.CharField(max_length=255)
-    pet_location_day_away = models.CharField(max_length=255)
-    pet_location_night = models.CharField(max_length=255)
-    pet_location_long_absence = models.CharField(max_length=255)
-    walk_time = models.CharField(max_length=255)
-    alone_time = models.PositiveIntegerField()
-    moving_plan = models.TextField()
-    bad_behavior_response = models.TextField()
-
-    # Desired Pet Characteristics
-    preferences = models.TextField(blank=True, null=True)
-    pet_character = models.TextField()
-    willing_to_host_special_needs = models.TextField()
-    additional_info = models.TextField(blank=True, null=True)
-
-    accepted_terms = models.BooleanField()
-
-    def __str__(self):
-        return self.name

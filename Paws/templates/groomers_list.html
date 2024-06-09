@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Groomers List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Groomers List</h1>
+    <div class="row">
+        {% for groomer in groomers %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if groomer.profile_image %}
+                <img src="{{ groomer.profile_image.url }}" class="card-img-top" alt="{{ groomer.first_name }} {{ groomer.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ groomer.first_name }} {{ groomer.last_name }}</h5>
+                    <p class="card-text">{{ groomer.email }}</p>
+                    <p class="card-text">{{ groomer.phone_number }}</p>
+                    <p class="card-text">Grooming Experience: {{ groomer.grooming_experience_years }} years</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -14,69 +14,60 @@
     </style>
 </head>
 <body>
-     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}">My Website</a>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'home' %}">RePaw</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Home</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{% url 'dogs_list' %}">Dogs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'walks_list' %}">Walks</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'breeds_list' %}">Breeds</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'trainings_list' %}">Trainings</a>
+                <a class="nav-link" href="{% url 'walkers_list' %}">Walkers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'healths_list' %}">Health Records</a>
+                <a class="nav-link" href="{% url 'sitters_list' %}">Sitters</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'food_list' %}">Food</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'friendlyspots_list' %}">Friendly Spots</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'owners_list' %}">Owners</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'shelters_list' %}">Shelters</a>
+                <a class="nav-link" href="{% url 'groomers_list' %}">Groomers</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'doctors_list' %}">Doctors</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'appointments_list' %}">Appointments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'vaccinationrecords_list' %}">Vaccination Records</a>
+                <a class="nav-link" href="{% url 'shelters_list' %}">Shelters</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'events_list' %}">Events</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'microchips_list' %}">Microchips</a>
+                <a class="nav-link" href="{% url 'friendlyspots_list' %}">Friendly Spots</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'predictions_list' %}">Predictions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_profile_list' %}">User Profiles</a>
-            </li>
-            <!-- Add more links as needed -->
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
+
 
     <!-- Page content -->
     <div class="container">
@@ -87,7 +78,7 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
-            <span class="text-muted">© 2024 My Website</span>
+            <span class="text-muted">© 2024 RePaw</span>
         </div>
     </footer>
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Walkers List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Walkers List</h1>
+    <div class="row">
+        {% for walker in walkers %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if walker.profile_image %}
+                <img src="{{ walker.profile_image.url }}" class="card-img-top" alt="{{ walker.first_name }} {{ walker.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ walker.first_name }} {{ walker.last_name }}</h5>
+                    <p class="card-text">{{ walker.email }}</p>
+                    <p class="card-text">{{ walker.phone_number }}</p>
+                    {% if walker.walker_profile %}
+                    <p class="card-text">Experience: {{ walker.walker_profile.walking_experience_years }} years</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

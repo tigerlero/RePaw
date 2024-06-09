@@ -1,10 +1,10 @@
-from django.contrib.auth import login as auth_login, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
 # Create your views here.
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
@@ -14,7 +14,7 @@ from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, Sh
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
     UserProfileForm, GroomingForm, AdoptionForm, RegisterForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
-    Adoption, Grooming, Groomer
+    Adoption, Grooming, Groomer, Walker, Sitter
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
     AdoptionSerializer, GroomingSerializer, GroomerSerializer
@@ -208,13 +208,14 @@ def delete_dog(request, dog_id):
     return render(request, 'delete_dog.html', {'dog': dog})
 
 
-def breed_list(request):
+def breeds_list(request):
     breeds = Breed.objects.all()
-    return render(request, 'breed_list.html', {'breeds': breeds})
+    # create_breeds()
+    return render(request, 'breeds_list.html', {'breeds': breeds})
 
 
-def breed_detail(request, breed_id):
-    breed = get_object_or_404(Breed, pk=breed_id)
+def breed_detail(request, breed_name):
+    breed = get_object_or_404(Breed, name=breed_name)
     return render(request, 'breed_detail.html', {'breed': breed})
 
 
@@ -222,7 +223,7 @@ def delete_breed(request, breed_id):
     breed = get_object_or_404(Breed, pk=breed_id)
     if request.method == 'POST':
         breed.delete()
-        return redirect(reverse('breed_list'))
+        return redirect(reverse('breeds_list'))
     return render(request, 'delete_breed.html', {'breed': breed})
 
 
@@ -299,7 +300,7 @@ def friendlyspot_delete(request, spot_id):
 
 
 def owner_list(request):
-    owners = Owner.objects.all()
+    owners = UserProfile.objects.filter(is_owner=True).prefetch_related('owner_profile')
     return render(request, 'owner_list.html', {'owners': owners})
 
 
@@ -329,7 +330,7 @@ def owner_delete(request, owner_id):
 
 
 def shelter_list(request):
-    shelters = Shelter.objects.all()
+    shelters = UserProfile.objects.filter(is_shelter=True).prefetch_related('shelter_profile')
     return render(request, 'shelter_list.html', {'shelters': shelters})
 
 
@@ -359,7 +360,7 @@ def shelter_delete(request, shelter_id):
 
 
 def doctor_list(request):
-    doctors = Doctor.objects.all()
+    doctors = UserProfile.objects.filter(is_doctor=True)
     return render(request, 'doctor_list.html', {'doctors': doctors})
 
 
@@ -635,7 +636,7 @@ def user_profile(request):
         form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('user_profile')
+            return redirect('profile')
     else:
         form = UserProfileForm(instance=user)
     return render(request, 'user_profile.html', {'form': form})
@@ -685,7 +686,7 @@ def create_breed(request):
         form = BreedForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('breed_list')
+            return redirect('breeds_list')
     else:
         form = BreedForm()
     return render(request, 'create_breed.html', {'form': form})
@@ -733,8 +734,16 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user_profile = UserProfile.objects.create(
+
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            userprofile = UserProfile.objects.create(
                 user=user,
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                email=form.cleaned_data.get('email'),
                 is_shelter=form.cleaned_data.get('is_shelter'),
                 is_owner=form.cleaned_data.get('is_owner'),
                 is_doctor=form.cleaned_data.get('is_doctor'),
@@ -742,29 +751,35 @@ def register(request):
                 is_sitter=form.cleaned_data.get('is_sitter'),
                 is_groomer=form.cleaned_data.get('is_groomer'),
             )
-            user_profile.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
+            userprofile.save()
+            if userprofile.is_doctor:
+                Doctor.objects.create(userprofile=userprofile)
+            if userprofile.is_owner:
+                Owner.objects.create(userprofile=userprofile)
+            if userprofile.is_shelter:
+                Shelter.objects.create(userprofile=userprofile)
+            if userprofile.is_walker:
+                Walker.objects.create(userprofile=userprofile)
+            if userprofile.is_sitter:
+                Sitter.objects.create(userprofile=userprofile)
+            if userprofile.is_groomer:
+                Groomer.objects.create(userprofile=userprofile)
+            return redirect('/')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 
-
-
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                auth_login(request, user)
-                return redirect('home')
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  # Change 'home' to the name of your home page
+        else:
+            error_message = "Username and password don't match. Please try again."
+            return render(request, 'login.html', {'form': form, 'error_message': error_message})
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -772,7 +787,155 @@ def login_view(request):
 
 def custom_logout(request):
     logout(request)
-    return redirect(reverse(''))
+    return redirect(reverse('home'))
 
 
+def walkers_list(request):
+    walkers = UserProfile.objects.filter(is_walker=True).prefetch_related('walker_profile')
+    return render(request, 'walkers_list.html', {'walkers': walkers})
 
+
+def groomers_list(request):
+    groomers = UserProfile.objects.filter(is_groomer=True).prefetch_related('groomer_profile')
+    return render(request, 'groomers_list.html', {'groomers': groomers})
+
+
+def sitters_list(request):
+    sitters = UserProfile.objects.filter(is_sitter=True).prefetch_related('sitter_profile')
+    return render(request, 'sitters_list.html', {'sitters': sitters})
+
+
+def create_breeds():
+    # Create instances of the Breed model
+    breeds_data = [
+        {
+            'name': 'Labrador Retriever',
+            'characteristics': 'Friendly, Outgoing, Even Tempered',
+            'temperament': 'Friendly, Intelligent, Outgoing',
+            'origin': 'Canada',
+            'lifespan': '10-12 years',
+            'size': 'Large',
+            'coat_length': 'Short',
+            'shedding': 'High',
+            'exercise_needs': 'High',
+            'trainability': 'High',
+            'health_issues': 'Common health issues include hip dysplasia, elbow dysplasia, and obesity.',
+            'special_needs': 'Regular exercise and mental stimulation are essential.'
+        },
+        {
+            'name': 'German Shepherd',
+            'characteristics': 'Smart, Confident, Courageous',
+            'temperament': 'Confident, Courageous, Smart',
+            'origin': 'Germany',
+            'lifespan': '9-13 years',
+            'size': 'Large',
+            'coat_length': 'Medium',
+            'shedding': 'Moderate',
+            'exercise_needs': 'High',
+            'trainability': 'High',
+            'health_issues': 'Common health issues include hip dysplasia, elbow dysplasia, and degenerative myelopathy.',
+            'special_needs': 'Regular exercise and early socialization and training are important.'
+        },
+        {
+            'name': 'Golden Retriever',
+            'characteristics': 'Intelligent, Friendly, Devoted',
+            'temperament': 'Intelligent, Friendly, Devoted',
+            'origin': 'Scotland',
+            'lifespan': '10-12 years',
+            'size': 'Large',
+            'coat_length': 'Medium',
+            'shedding': 'Moderate',
+            'exercise_needs': 'High',
+            'trainability': 'High',
+            'health_issues': 'Common health issues include hip dysplasia, elbow dysplasia, and obesity.',
+            'special_needs': 'Regular exercise, mental stimulation, and proper diet are important.'
+        },
+        {
+            'name': 'Bulldog',
+            'characteristics': 'Docile, Willful, Friendly',
+            'temperament': 'Docile, Willful, Friendly',
+            'origin': 'England',
+            'lifespan': '8-10 years',
+            'size': 'Medium',
+            'coat_length': 'Short',
+            'shedding': 'Low',
+            'exercise_needs': 'Low',
+            'trainability': 'Low',
+            'health_issues': 'Common health issues include hip dysplasia, brachycephalic syndrome, and skin problems.',
+            'special_needs': 'Avoid excessive heat and vigorous exercise due to their brachycephalic anatomy.'
+        },
+        {
+            'name': 'Beagle',
+            'characteristics': 'Friendly, Curious, Merry',
+            'temperament': 'Friendly, Curious, Merry',
+            'origin': 'England',
+            'lifespan': '12-15 years',
+            'size': 'Small to Medium',
+            'coat_length': 'Short',
+            'shedding': 'Moderate',
+            'exercise_needs': 'Moderate',
+            'trainability': 'Moderate',
+            'health_issues': 'Common health issues include epilepsy, hypothyroidism, and hip dysplasia.',
+            'special_needs': 'Regular exercise and a balanced diet are important.'
+        },
+        {
+            'name': 'Poodle',
+            'characteristics': 'Intelligent, Active, Alert',
+            'temperament': 'Intelligent, Active, Alert',
+            'origin': 'Germany',
+            'lifespan': '10-18 years',
+            'size': 'Toy, Miniature, Standard',
+            'coat_length': 'Curly',
+            'shedding': 'Low',
+            'exercise_needs': 'Moderate to High',
+            'trainability': 'High',
+            'health_issues': 'Common health issues include hip dysplasia, progressive retinal atrophy, and bloat.',
+            'special_needs': 'Regular grooming and exercise are essential.'
+        },
+        {
+            'name': 'French Bulldog',
+            'characteristics': 'Adaptable, Playful, Smart',
+            'temperament': 'Adaptable, Playful, Smart',
+            'origin': 'France',
+            'lifespan': '10-12 years',
+            'size': 'Small',
+            'coat_length': 'Short',
+            'shedding': 'Low',
+            'exercise_needs': 'Low',
+            'trainability': 'Low',
+            'health_issues': 'Common health issues include brachycephalic syndrome, hip dysplasia, and allergies.',
+            'special_needs': 'Avoid excessive heat and rigorous exercise due to their brachycephalic anatomy.'
+        },
+        {
+            'name': 'Rottweiler',
+            'characteristics': 'Confident, Courageous, Calm',
+            'temperament': 'Confident, Courageous, Calm',
+            'origin': 'Germany',
+            'lifespan': '8-10 years',
+            'size': 'Large',
+            'coat_length': 'Short',
+            'shedding': 'Moderate',
+            'exercise_needs': 'High',
+            'trainability': 'High',
+            'health_issues': 'Common health issues include hip dysplasia, osteosarcoma, and bloat.',
+            'special_needs': 'Early socialization and training are important for a well-behaved Rottweiler.'
+        },
+        {
+            'name': 'Yorkshire Terrier',
+            'characteristics': 'Affectionate, Spirited, Intelligent',
+            'temperament': 'Affectionate, Spirited, Intelligent',
+            'origin': 'England',
+            'lifespan': '13-16 years',
+            'size': 'Toy',
+            'coat_length': 'Long',
+            'shedding': 'Low',
+            'exercise_needs': 'Low',
+            'trainability': 'Moderate',
+            'health_issues': 'Common health issues include patellar luxation, tracheal collapse, and dental problems.',
+            'special_needs': 'Regular grooming and dental care are essential for Yorkshire Terriers.'
+        },
+    ]
+
+    # Loop through the data and create Breed objects
+    for breed_data in breeds_data:
+        Breed.objects.create(**breed_data)

@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
-
-{% block title %}Shelters{% endblock %}
+{% load static %}
+{% block title %}Shelters List{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Shelters</h1>
-    <ul class="list-group">
+    <h1 class="my-4">Shelters List</h1>
+    <div class="row">
         {% for shelter in shelters %}
-            <li class="list-group-item">
-                <a href="{% url 'shelter_detail' shelter.id %}">{{ shelter.name }}</a>
-            </li>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if shelter.profile_image %}
+                <img src="{{ shelter.profile_image.url }}" class="card-img-top" alt="{{ shelter.first_name }} {{ shelter.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ shelter.first_name }} {{ shelter.last_name }}</h5>
+                    <p class="card-text">{{ shelter.email }}</p>
+                    <p class="card-text">{{ shelter.phone_number }}</p>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

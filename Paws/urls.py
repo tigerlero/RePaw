@@ -1,10 +1,12 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 
 from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, HealthViewSet, FoodViewSet, \
     FriendlySpotViewSet, MicrochipViewSet, DogBreedPredictionViewSet, UserProfileViewSet, \
-    dogs_list, dog_detail, create_dog, update_dog, delete_dog, breed_list, breed_detail, delete_breed, update_breed, \
+    dogs_list, dog_detail, create_dog, update_dog, delete_dog, breeds_list, breed_detail, delete_breed, update_breed, \
     food_list, food_detail, food_delete, food_update, friendlyspot_list, friendlyspot_detail, friendlyspot_update, \
     friendlyspot_delete, owner_list, owner_detail, owner_update, owner_delete, shelter_list, shelter_detail, \
     shelter_update, shelter_delete, doctor_list, doctor_detail, doctor_update, doctor_delete, event_list, event_detail, \
@@ -15,7 +17,7 @@ from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, Healt
     vaccination_record_delete, dog_breed_prediction_list, dog_breed_prediction_detail, dog_breed_prediction_update, \
     dog_breed_prediction_delete, user_profile, user_profile_list, user_profile_update, user_profile_delete, walks_list, \
     create_walk, adoption_form, adoptionSuccess, adoption_list, groomer_list, grooming_list, register, login_view, \
-    custom_logout
+    custom_logout, walkers_list, groomers_list, sitters_list
 from .views import OwnerViewSet, ShelterViewSet, DoctorViewSet, AppointmentViewSet, VaccinationRecordViewSet, EventViewSet
 from django.views.generic import TemplateView
 
@@ -45,8 +47,8 @@ urlpatterns = [
     path('dogs/create/', create_dog, name='create_dog'),
     path('dogs/update/<int:dog_id>/', update_dog, name='update_dog'),
     path('dogs/delete/<int:dog_id>/', delete_dog, name='delete_dog'),
-    path('breeds/', breed_list, name='breeds_list'),
-    path('breeds/<int:breed_id>/', breed_detail, name='breed_detail'),
+    path('breeds/', breeds_list, name='breeds_list'),
+    path('breeds/<str:breed_name>/', breed_detail, name='breed_detail'),
     path('breeds/delete/<int:breed_id>/', delete_breed, name='delete_breed'),
     path('breeds/update/<int:breed_id>/', update_breed, name='update_breed'),
     path('foods/', food_list, name='food_list'),
@@ -82,6 +84,7 @@ urlpatterns = [
     path('walks/<int:walk_id>/', walk_detail, name='walk_detail'),
     path('walks/<int:walk_id>/update/', walk_update, name='walk_update'),
     path('walks/<int:walk_id>/delete/', walk_delete, name='walk_delete'),
+    path('walkers/', walkers_list, name='walkers_list'),
     path('trainings/', training_list, name='trainings_list'),
     path('trainings/<int:training_id>/', training_detail, name='training_detail'),
     path('trainings/<int:training_id>/update/', training_update, name='training_update'),
@@ -102,7 +105,7 @@ urlpatterns = [
     path('dog-breed-predictions/<int:prediction_id>/', dog_breed_prediction_detail, name='dog_breed_prediction_detail'),
     path('dog-breed-predictions/<int:prediction_id>/update/', dog_breed_prediction_update, name='dog_breed_prediction_update'),
     path('dog-breed-predictions/<int:prediction_id>/delete/', dog_breed_prediction_delete, name='dog_breed_prediction_delete'),
-    path('profile/', user_profile, name='user_profile'),
+    path('profile/', user_profile, name='profile'),
     path('profiles/', user_profile_list, name='user_profile_list'),
     path('profiles/<int:profile_id>/update/', user_profile_update, name='user_profile_update'),
     path('profiles/<int:profile_id>/delete/', user_profile_delete, name='user_profile_delete'),
@@ -111,6 +114,8 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', custom_logout, name='logout'),
+    path('groomers/', groomers_list, name='groomers_list'),
+    path('sitters/', sitters_list, name='sitters_list'),
     # serializer view
     path('api/adoptions/', adoption_list, name='adoption_list'),
     path('api/groomers/', groomer_list, name='groomer_list'),
@@ -118,3 +123,4 @@ urlpatterns = [
 
 
 ]
+

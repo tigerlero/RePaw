@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
-
-{% block title %}Doctors{% endblock %}
+{% load static %}
+{% block title %}Doctors List{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Doctors</h1>
-    <ul class="list-group">
+    <h1 class="my-4">Doctors List</h1>
+    <div class="row">
         {% for doctor in doctors %}
-            <li class="list-group-item">
-                <a href="{% url 'doctor_detail' doctor.id %}">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</a>
-            </li>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if doctor.profile_image %}
+                <img src="{{ doctor.profile_image.url }}" class="card-img-top" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
+                    <p class="card-text">{{ doctor.email }}</p>
+                    <p class="card-text">{{ doctor.phone_number }}</p>
+                    <p class="card-text">Speciality: {{ doctor.speciality }}</p>
+                    <p class="card-text">Clinic Address: {{ doctor.clinic_address }}</p>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

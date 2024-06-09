@@ -1,12 +1,53 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ breed.name }}{% endblock %}
-
+{% load static %}
 {% block content %}
 <div class="container">
     <h1>{{ breed.name }}</h1>
-    <p>{{ breed.characteristics }}</p>
-    <a href="{% url 'breed_list' %}" class="btn btn-secondary">Back to Breeds</a>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{% if breed.image %}{{ breed.image.url }}{% else %}{% static 'images/default-breed.jpg' %}{% endif %}" class="img-fluid" alt="{{ breed.name }}">
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">Characteristics:</dt>
+                <dd class="col-sm-9">{{ breed.characteristics }}</dd>
+
+                <dt class="col-sm-3">Temperament:</dt>
+                <dd class="col-sm-9">{{ breed.temperament }}</dd>
+
+                <dt class="col-sm-3">Origin:</dt>
+                <dd class="col-sm-9">{{ breed.origin }}</dd>
+
+                <dt class="col-sm-3">Lifespan:</dt>
+                <dd class="col-sm-9">{{ breed.lifespan }}</dd>
+
+                <dt class="col-sm-3">Size:</dt>
+                <dd class="col-sm-9">{{ breed.size }}</dd>
+
+                <dt class="col-sm-3">Coat Length:</dt>
+                <dd class="col-sm-9">{{ breed.coat_length }}</dd>
+
+                <dt class="col-sm-3">Shedding:</dt>
+                <dd class="col-sm-9">{{ breed.get_shedding_display }}</dd>
+
+                <dt class="col-sm-3">Exercise Needs:</dt>
+                <dd class="col-sm-9">{{ breed.exercise_needs }}</dd>
+
+                <dt class="col-sm-3">Trainability:</dt>
+                <dd class="col-sm-9">{{ breed.trainability }}</dd>
+
+                <dt class="col-sm-3">Health Issues:</dt>
+                <dd class="col-sm-9">{{ breed.health_issues }}</dd>
+
+                <dt class="col-sm-3">Special Needs:</dt>
+                <dd class="col-sm-9">{{ breed.special_needs }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <a href="{% url 'breeds_list' %}" class="btn btn-secondary">Back to Breeds</a>
     <a href="{% url 'update_breed' breed.id %}" class="btn btn-primary">Edit</a>
     <a href="{% url 'delete_breed' breed.id %}" class="btn btn-danger">Delete</a>
 </div>

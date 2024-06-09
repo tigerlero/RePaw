@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sitters List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Sitters List</h1>
+    <div class="row">
+        {% for sitter in sitters %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if sitter.profile_image %}
+                <img src="{{ sitter.profile_image.url }}" class="card-img-top" alt="{{ sitter.first_name }} {{ sitter.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ sitter.first_name }} {{ sitter.last_name }}</h5>
+                    <p class="card-text">{{ sitter.email }}</p>
+                    <p class="card-text">{{ sitter.phone_number }}</p>
+                    {% if sitter.sitter_profile %}
+                    <p class="card-text">Experience: {{ sitter.sitter_profile.experience_years }} years</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

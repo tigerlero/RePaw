@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
-
-{% block title %}Owners{% endblock %}
+{% load static %}
+{% block title %}Owners List{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Owners</h1>
-    <ul class="list-group">
+    <h1 class="my-4">Owners List</h1>
+    <div class="row">
         {% for owner in owners %}
-            <li class="list-group-item">
-                <a href="{% url 'owner_detail' owner.id %}">{{ owner.first_name }} {{ owner.last_name }}</a>
-            </li>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if owner.profile_image %}
+                <img src="{{ owner.profile_image.url }}" class="card-img-top" alt="{{ owner.first_name }} {{ owner.last_name }}">
+                {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ owner.first_name }} {{ owner.last_name }}</h5>
+                    <p class="card-text">{{ owner.email }}</p>
+                    <p class="card-text">{{ owner.phone_number }}</p>
+                    <p class="card-text">Number of Dogs: {{ owner.owner_profile.number_of_dogs }}</p>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

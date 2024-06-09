@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Breeds{% endblock %}
 
@@ -9,10 +10,11 @@
         {% for breed in breeds %}
         <div class="col-md-4">
             <div class="card mb-4">
+                <img src="{% if breed.image %}{{ breed.image.url }}{% else %}{% static 'default-breed.jpg' %}{% endif %}" class="card-img-top" alt="{{ breed.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ breed.name }}</h5>
                     <p class="card-text">{{ breed.characteristics|truncatewords:20 }}</p>
-                    <a href="{% url 'breed_detail' breed.id %}" class="btn btn-primary">Learn More</a>
+                    <a href="{% url 'breed_detail' breed.name %}" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
