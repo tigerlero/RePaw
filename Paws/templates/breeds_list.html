@@ -10,7 +10,11 @@
         {% for breed in breeds %}
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="{% if breed.image %}{{ breed.image.url }}{% else %}{% static 'default-breed.jpg' %}{% endif %}" class="card-img-top" alt="{{ breed.name }}">
+                {% if breed.image %}
+                <img src="{{ breed.image.url }}" class="card-img-top" alt="{{ breed.name }}">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default breed Image">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ breed.name }}</h5>
                     <p class="card-text">{{ breed.characteristics|truncatewords:20 }}</p>

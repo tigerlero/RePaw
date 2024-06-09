@@ -219,21 +219,21 @@ def breed_detail(request, breed_name):
     return render(request, 'breed_detail.html', {'breed': breed})
 
 
-def delete_breed(request, breed_id):
-    breed = get_object_or_404(Breed, pk=breed_id)
+def delete_breed(request, breed_name):
+    breed = get_object_or_404(Breed, name=breed_name)
     if request.method == 'POST':
         breed.delete()
         return redirect(reverse('breeds_list'))
     return render(request, 'delete_breed.html', {'breed': breed})
 
 
-def update_breed(request, breed_id):
-    breed = get_object_or_404(Breed, pk=breed_id)
+def update_breed(request, breed_name):
+    breed = get_object_or_404(Breed, name=breed_name)
     if request.method == 'POST':
-        form = BreedForm(request.POST, instance=breed)
+        form = BreedForm(request.POST, request.FILES, instance=breed)  # Add request.FILES to handle file uploads
         if form.is_valid():
             form.save()
-            return redirect(reverse('breed_detail', args=[breed.id]))
+            return redirect(reverse('breed_detail', args=[breed.name]))
     else:
         form = BreedForm(instance=breed)
     return render(request, 'update_breed.html', {'form': form, 'breed': breed})

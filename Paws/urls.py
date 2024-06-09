@@ -49,8 +49,8 @@ urlpatterns = [
     path('dogs/delete/<int:dog_id>/', delete_dog, name='delete_dog'),
     path('breeds/', breeds_list, name='breeds_list'),
     path('breeds/<str:breed_name>/', breed_detail, name='breed_detail'),
-    path('breeds/delete/<int:breed_id>/', delete_breed, name='delete_breed'),
-    path('breeds/update/<int:breed_id>/', update_breed, name='update_breed'),
+    path('breeds/delete/<str:breed_name>/', delete_breed, name='delete_breed'),
+    path('breeds/update/<str:breed_name>/', update_breed, name='update_breed'),
     path('foods/', food_list, name='food_list'),
     path('foods/<int:food_id>/', food_detail, name='food_detail'),
     path('foods/<int:food_id>/delete/', food_delete, name='food_delete'),
@@ -123,4 +123,8 @@ urlpatterns = [
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -7,7 +7,11 @@
     <h1>{{ breed.name }}</h1>
     <div class="row">
         <div class="col-md-4">
-            <img src="{% if breed.image %}{{ breed.image.url }}{% else %}{% static 'images/default-breed.jpg' %}{% endif %}" class="img-fluid" alt="{{ breed.name }}">
+                {% if breed.image %}
+                <img src="{{ breed.image.url }}" class="card-img-top" alt="{{ breed.name }}">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default breed Image">
+                {% endif %}
         </div>
         <div class="col-md-8">
             <dl class="row">
@@ -48,7 +52,7 @@
     </div>
 
     <a href="{% url 'breeds_list' %}" class="btn btn-secondary">Back to Breeds</a>
-    <a href="{% url 'update_breed' breed.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'delete_breed' breed.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'update_breed' breed.name %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'delete_breed' breed.name %}" class="btn btn-danger">Delete</a>
 </div>
 {% endblock %}
