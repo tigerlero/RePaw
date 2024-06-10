@@ -51,18 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CSRF_TRUSTED_ORIGINS = ['http://repaw.gr',
-                        'https://repaw.gr',
-                        'https://repaw.site',
-                        'http://repaw.site',
-                        'https://192.168.1.69',
-                        'http://www.repaw.site',
-                        'https://www.repaw.site',
-                        'https://www.repaw.gr',
-                        'http://www.repaw.gr',
-                        'https://79.130.46.8',
-                        'http://79.130.46.8',
-                        'http://192.168.1.69']
+CSRF_TRUSTED_ORIGINS = []
 ROOT_URLCONF = 'RePaw.urls'
 
 TEMPLATES = [
