@@ -76,7 +76,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, default="")
     last_name = models.CharField(max_length=100, default="")
-    email = models.EmailField(unique=True, null=True)
+    email = models.EmailField(unique=False, null=True)
     phone_number = models.CharField(max_length=15, default="")
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)  # Add this line
 
@@ -212,11 +212,8 @@ class Shelter(models.Model):
     userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='shelter_profile')
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
     capacity = models.IntegerField(blank=True, null=True)
     iban = models.CharField(max_length=34, null=True, blank=True)  # Assuming IBAN is a string of maximum 34 characters
-
 
     def __str__(self):
         return self.name
@@ -365,7 +362,7 @@ class Resource(models.Model):
 
 class Trainer(models.Model):
     userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='trainer_profile')
-    experience_years = models.IntegerField()
+    experience_years = models.IntegerField(blank=True, null=True)
     specialties = models.TextField(blank=True, null=True)
 
     def __str__(self):

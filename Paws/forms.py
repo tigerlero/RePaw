@@ -119,11 +119,12 @@ class RegisterForm(UserCreationForm):
     is_walker = forms.BooleanField(required=False)
     is_sitter = forms.BooleanField(required=False)
     is_groomer = forms.BooleanField(required=False)
+    is_trainer = forms.BooleanField(required=False)
 
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2',
-                  'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer']
+                  'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer', 'is_trainer']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -144,17 +145,7 @@ class TrainerForm(forms.ModelForm):
 class AdoptionForm(forms.ModelForm):
     class Meta:
         model = Adoption
-        fields = [
-            'name', 'birth_date', 'email', 'address', 'city', 'postal_code', 'home_phone',
-            'work_phone', 'mobile_phone', 'facebook_profile', 'instagram_profile',
-            'adults_in_home', 'children_info', 'allergies', 'home_type', 'fence_height',
-            'escape_possibility', 'current_pets', 'past_pets', 'abandoned_pet',
-            'adopted_before', 'adoption_reason', 'family_agreement', 'caretaker_info',
-            'plan_to_neuter', 'if_not_neuter_reason', 'pet_location_day_home',
-            'pet_location_day_away', 'pet_location_night', 'pet_location_long_absence',
-            'walk_time', 'alone_time', 'moving_plan', 'bad_behavior_response', 'preferences',
-            'pet_character', 'willing_to_host_special_needs', 'additional_info', 'accepted_terms'
-        ]
+        fields = '__all__'
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'email': forms.EmailInput(),
@@ -165,22 +156,29 @@ class AdoptionForm(forms.ModelForm):
             'instagram_profile': forms.URLInput(),
             'adults_in_home': forms.NumberInput(),
             'fence_height': forms.NumberInput(),
-            'current_pets': forms.Textarea(attrs={'rows': 3}),
-            'past_pets': forms.Textarea(attrs={'rows': 3}),
-            'adoption_reason': forms.Textarea(attrs={'rows': 3}),
-            'caretaker_info': forms.Textarea(attrs={'rows': 3}),
-            'if_not_neuter_reason': forms.Textarea(attrs={'rows': 3}),
-            'pet_location_day_home': forms.Textarea(attrs={'rows': 3}),
-            'pet_location_day_away': forms.Textarea(attrs={'rows': 3}),
-            'pet_location_night': forms.Textarea(attrs={'rows': 3}),
-            'pet_location_long_absence': forms.Textarea(attrs={'rows': 3}),
-            'walk_time': forms.Textarea(attrs={'rows': 3}),
+            'current_pets': forms.Textarea(attrs={'rows': 1}),
+            'past_pets': forms.Textarea(attrs={'rows': 1}),
+            'adoption_reason': forms.Textarea(attrs={'rows': 1}),
+            'caretaker_info': forms.Textarea(attrs={'rows': 1}),
+            'if_not_neuter_reason': forms.Textarea(attrs={'rows': 1}),
+            'pet_location_day_home': forms.Textarea(attrs={'rows': 1}),
+            'pet_location_day_away': forms.Textarea(attrs={'rows': 1}),
+            'pet_location_night': forms.Textarea(attrs={'rows': 1}),
+            'pet_location_long_absence': forms.Textarea(attrs={'rows': 1}),
+            'walk_time': forms.Textarea(attrs={'rows': 1}),
             'alone_time': forms.NumberInput(),
-            'moving_plan': forms.Textarea(attrs={'rows': 3}),
-            'bad_behavior_response': forms.Textarea(attrs={'rows': 3}),
-            'preferences': forms.Textarea(attrs={'rows': 3}),
-            'pet_character': forms.Textarea(attrs={'rows': 3}),
-            'willing_to_host_special_needs': forms.Textarea(attrs={'rows': 3}),
-            'additional_info': forms.Textarea(attrs={'rows': 3}),
+            'moving_plan': forms.Textarea(attrs={'rows': 1}),
+            'bad_behavior_response': forms.Textarea(attrs={'rows': 1}),
+            'children_info': forms.Textarea(attrs={'rows': 1}),
+            'preferences': forms.Textarea(attrs={'rows': 1}),
+            'pet_character': forms.Textarea(attrs={'rows': 1}),
+            'willing_to_host_special_needs': forms.Textarea(attrs={'rows': 1}),
+            'additional_info': forms.Textarea(attrs={'rows': 1}),
             'accepted_terms': forms.CheckboxInput(),
         }
+
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super(AdoptionForm, self).__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control'

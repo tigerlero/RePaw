@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Adoption Form</title>
-</head>
-<body>
-    <h2>Adoption Form</h2>
-    <form method="post">
+{% extends 'base.html' %}
+
+{% block title %}Adoption Form{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Adoption Form</h2>
+    <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}

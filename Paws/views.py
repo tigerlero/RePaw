@@ -767,6 +767,7 @@ def register(request):
                 Groomer.objects.create(userprofile=userprofile)
             if userprofile.is_trainer:
                 Trainer.objects.create(userprofile=userprofile)
+
             return redirect('/')
     else:
         form = RegisterForm()
@@ -828,7 +829,7 @@ def resource_detail(request, slug):
 
 
 def trainers_list(request):
-    trainers = Trainer.objects.all()
+    trainers = UserProfile.objects.filter(is_trainer=True).prefetch_related('trainer_profile')
     return render(request, 'trainers_list.html', {'trainers': trainers})
 
 
