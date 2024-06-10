@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 # Create your views here.
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -17,7 +17,7 @@ from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Micr
     Adoption, Grooming, Groomer, Walker, Sitter, Testimonial, Resource, Trainer
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
-    AdoptionSerializer, GroomingSerializer, GroomerSerializer
+    AdoptionSerializer, GroomingSerializer, GroomerSerializer, TrainerSerializer
 
 from .models import Owner, Shelter, Doctor, Appointment, VaccinationRecord, Event
 from .serializers import OwnerSerializer, ShelterSerializer, DoctorSerializer, AppointmentSerializer, \
@@ -102,6 +102,15 @@ class DogBreedPredictionViewSet(viewsets.ModelViewSet):
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+
+class TrainerListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
+
+class TrainerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -743,6 +752,7 @@ def register(request):
                 user=user,
                 first_name=form.cleaned_data.get('first_name'),
                 last_name=form.cleaned_data.get('last_name'),
+                city=form.cleaned_data.get('city'),
                 email=form.cleaned_data.get('email'),
                 is_shelter=form.cleaned_data.get('is_shelter'),
                 is_owner=form.cleaned_data.get('is_owner'),

@@ -79,7 +79,7 @@ class UserProfile(models.Model):
     email = models.EmailField(unique=False, null=True)
     phone_number = models.CharField(max_length=15, default="")
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)  # Add this line
-
+    city = models.CharField(max_length=100, default="")
     is_owner = models.BooleanField(default=False)
     is_shelter = models.BooleanField(default=False)
     is_doctor = models.BooleanField(default=False)
@@ -363,6 +363,7 @@ class Resource(models.Model):
 class Trainer(models.Model):
     userprofile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='trainer_profile')
     experience_years = models.IntegerField(blank=True, null=True)
+    postal_code = models.CharField(max_length=10, default="")
     specialties = models.TextField(blank=True, null=True)
 
     def __str__(self):
