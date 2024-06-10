@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+g(9!6p!(a1%fz457zt86bp&&$a6%aw@zzgvrwrj006nrvx=w$'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.69', 'localhost', '127.0.0.1', 'repaw.site', 'repaw.gr', 'www.repaw.site', 'www.repaw.gr', '79.130.46.8']
+ALLOWED_HOSTS = []
 
 
 
@@ -51,18 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CSRF_TRUSTED_ORIGINS = ['http://repaw.gr',
-                        'https://repaw.gr',
-                        'https://repaw.site',
-                        'http://repaw.site',
-                        'https://192.168.1.69',
-                        'http://www.repaw.site',
-                        'https://www.repaw.site',
-                        'https://www.repaw.gr',
-                        'http://www.repaw.gr',
-                        'https://79.130.46.8',
-                        'http://79.130.46.8',
-                        'http://192.168.1.69']
+CSRF_TRUSTED_ORIGINS = []
 ROOT_URLCONF = 'RePaw.urls'
 
 TEMPLATES = [
