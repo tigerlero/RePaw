@@ -57,6 +57,12 @@ cover/
 
 # Django stuff:
 *.log
+# Ignore settings.py file
+settings.py
+# Ignore the settings.py file in the repaw directory
+repaw/settings.py
+# Ignore settings.py in all directories (optional)
+**/settings.py
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
