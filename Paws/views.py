@@ -777,7 +777,6 @@ def register(request):
                 Groomer.objects.create(userprofile=userprofile)
             if userprofile.is_trainer:
                 Trainer.objects.create(userprofile=userprofile)
-
             return redirect('/')
     else:
         form = RegisterForm()
