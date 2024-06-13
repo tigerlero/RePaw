@@ -3,13 +3,17 @@
 {% block title %}Delete Training{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Delete Training</h1>
-    <p>Are you sure you want to delete this training?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="{% url 'training_list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Delete Training</h1>
+        <div class="content">
+            <p>Are you sure you want to delete this training?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="button is-danger">Delete</button>
+                <a href="{% url 'training_list' %}" class="button is-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -3,13 +3,23 @@
 {% block title %}Update {{ event.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update {{ event.name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'event_detail' event.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update {{ event.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.as_p }}
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Update</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'event_detail' event.id %}" class="button is-secondary">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

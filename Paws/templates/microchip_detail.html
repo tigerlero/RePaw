@@ -3,13 +3,19 @@
 {% block title %}Microchip {{ microchip.id_number }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Microchip {{ microchip.id_number }}</h1>
-    <p><strong>ID Number:</strong> {{ microchip.id_number }}</p>
-    <p><strong>Registration Date:</strong> {{ microchip.registration_date }}</p>
-    <p><strong>Dog:</strong> {{ microchip.dog.name }}</p>
-    <a href="{% url 'microchip_list' %}" class="btn btn-secondary">Back to Microchips List</a>
-    <a href="{% url 'microchip_update' microchip.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'microchip_delete' microchip.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Microchip {{ microchip.id_number }}</h1>
+        <div class="box">
+            <p><strong>ID Number:</strong> {{ microchip.id_number }}</p>
+            <p><strong>Registration Date:</strong> {{ microchip.registration_date }}</p>
+            <p><strong>Dog:</strong> {{ microchip.dog.name }}</p>
+        </div>
+        <div class="buttons">
+            <a href="{% url 'microchip_list' %}" class="button is-secondary">Back to Microchips List</a>
+            <a href="{% url 'microchip_update' microchip.id %}" class="button is-warning">Update</a>
+            <a href="{% url 'microchip_delete' microchip.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

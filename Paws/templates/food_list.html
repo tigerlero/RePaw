@@ -3,14 +3,16 @@
 {% block title %}Food List{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Food List</h1>
-    <ul class="list-group">
-        {% for food in foods %}
-            <li class="list-group-item">
-                <a href="{% url 'food_detail' food.id %}">{{ food.name }}</a>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Food List</h1>
+        <ul class="list">
+            {% for food in foods %}
+            <li>
+                <a href="{% url 'food_detail' food.id %}" class="has-text-black">{{ food.name }}</a>
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

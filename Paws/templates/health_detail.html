@@ -3,12 +3,18 @@
 {% block title %}Health Record{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Health Record</h1>
-    <p><strong>Dog:</strong> {{ health_record.dog.name }}</p>
-    <!-- Display other fields as needed -->
-    <a href="{% url 'health_list' %}" class="btn btn-secondary">Back to Health Records</a>
-    <a href="{% url 'health_update' health_record.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'health_delete' health_record.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Health Record</h1>
+        <div class="content">
+            <p><strong>Dog:</strong> {{ health_record.dog.name }}</p>
+            <!-- Display other fields as needed -->
+        </div>
+        <div class="buttons">
+            <a href="{% url 'health_list' %}" class="button is-secondary">Back to Health Records</a>
+            <a href="{% url 'health_update' health_record.id %}" class="button is-warning">Update</a>
+            <a href="{% url 'health_delete' health_record.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -3,29 +3,36 @@
 
 {% block title %}Breeds{% endblock %}
 
-
 {% block content %}
-<div class="container">
-    <h1>Dog Breeds</h1>
-    <div class="row">
-        {% for breed in breeds %}
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="aspect-ratio-16-9">
-                {% if breed.image %}
-                <img src="{{ breed.image.url }}" class=" breed-img img-thumbnail rounded" alt="{{ breed.name }}">
-                {% else %}
-                <img src="{% static 'images/default.jpg' %}" class=" breed-img img-thumbnail rounded" alt="Default breed Image">
-                {% endif %}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ breed.name }}</h5>
-                    <p class="card-text">{{ breed.characteristics|truncatewords:20 }}</p>
-                    <a href="{% url 'breed_detail' breed.name %}" class="btn btn-primary">Learn More</a>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Dog Breeds</h1>
+        <div class="columns is-multiline">
+            {% for breed in breeds %}
+            <div class="column is-one-quarter">
+                <div class="card">
+                    <div class="card-image">
+                        <div class="aspect-ratio-16-9">
+                            {% if breed.image %}
+                            <img src="{{ breed.image.url }}" class="image is-16by9 breed-img img-thumbnail rounded" alt="{{ breed.name }}">
+                            {% else %}
+                            <img src="{% static 'images/default.jpg' %}" class="image is-16by9 breed-img img-thumbnail rounded" alt="Default breed Image">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <h5 class="title is-5">{{ breed.name }}</h5>
+                                <p class="subtitle is-6">{{ breed.characteristics|truncatewords:20 }}</p>
+                                <a href="{% url 'breed_detail' breed.name %}" class="button is-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

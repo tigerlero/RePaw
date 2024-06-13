@@ -3,13 +3,23 @@
 {% block title %}Delete Dog Breed Prediction{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Delete Dog Breed Prediction</h1>
-    <p>Are you sure you want to delete this dog breed prediction?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="{% url 'dog_breed_prediction_list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Delete Dog Breed Prediction</h1>
+        <div class="content">
+            <p>Are you sure you want to delete this dog breed prediction?</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-danger">Delete</button>
+                    </div>
+                    <div class="control">
+                        <a href="{% url 'dog_breed_prediction_list' %}" class="button is-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

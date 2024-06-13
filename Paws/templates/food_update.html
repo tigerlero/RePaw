@@ -3,13 +3,74 @@
 {% block title %}Update {{ food.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update {{ food.name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'food_detail' food.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update {{ food.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.name.label_tag }}
+                <div class="control">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.ingredients.label_tag }}
+                <div class="control">
+                    {{ form.ingredients }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.nutritional_content.label_tag }}
+                <div class="control">
+                    {{ form.nutritional_content }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.suitable_for_age_groups.label_tag }}
+                <div class="control">
+                    {{ form.suitable_for_age_groups }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.dietary_restrictions.label_tag }}
+                <div class="control">
+                    {{ form.dietary_restrictions }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.weight_management.label_tag }}
+                <div class="control">
+                    {{ form.weight_management }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.dental_health.label_tag }}
+                <div class="control">
+                    {{ form.dental_health }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.skin_and_coat_health.label_tag }}
+                <div class="control">
+                    {{ form.skin_and_coat_health }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.digestion_health.label_tag }}
+                <div class="control">
+                    {{ form.digestion_health }}
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Update</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'food_detail' food.id %}" class="button is-secondary">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

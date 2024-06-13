@@ -3,11 +3,21 @@
 {% block title %}Dog Breed Prediction{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Dog Breed Prediction Details</h1>
-    <!-- Display prediction details -->
-    <a href="{% url 'dog_breed_prediction_list' %}" class="btn btn-secondary">Back to Predictions</a>
-    <a href="{% url 'dog_breed_prediction_update' prediction.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'dog_breed_prediction_delete' prediction.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Dog Breed Prediction Details</h1>
+        <!-- Display prediction details here -->
+        <div class="field is-grouped">
+            <div class="control">
+                <a href="{% url 'dog_breed_prediction_list' %}" class="button is-secondary">Back to Predictions</a>
+            </div>
+            <div class="control">
+                <a href="{% url 'dog_breed_prediction_update' prediction.id %}" class="button is-warning">Update</a>
+            </div>
+            <div class="control">
+                <a href="{% url 'dog_breed_prediction_delete' prediction.id %}" class="button is-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

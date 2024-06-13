@@ -4,26 +4,42 @@
 {% block title %}Trainers{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Trainers</h1>
-    <a href="{% url 'create_trainer' %}" class="btn btn-primary mb-3">Add New Trainer</a>
-    <div class="row">
-        {% for trainer in trainers %}
-        <div class="col-md-4">
-            <div class="card mb-4">
-                {% if trainer.profile_image %}
-                <img src="{{ trainer.profile_image.url }}" class="card-img-top breed-img" alt="{{ trainer.name }}">
-                {% else %}
-                <img src="{% static 'images/default.jpg' %}" class="card-img-top breed-img" alt="Default trainer Image">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ trainer.name }}</h5>
-                    <p class="card-text">Specialties: {{ trainer.specialties|truncatewords:20 }}</p>
-                    <a href="{% url 'trainer_detail' trainer.id %}" class="btn btn-primary">Learn More</a>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Trainers</h1>
+        <a href="{% url 'create_trainer' %}" class="button is-primary mb-4">Add New Trainer</a>
+        <div class="columns is-multiline">
+            {% for trainer in trainers %}
+            <div class="column is-one-third">
+                <div class="card">
+                    {% if trainer.profile_image %}
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ trainer.profile_image.url }}" alt="{{ trainer.first_name }} {{ trainer.last_name }}">
+                        </figure>
+                    </div>
+                    {% else %}
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default trainer Image">
+                        </figure>
+                    </div>
+                    {% endif %}
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-5">{{ trainer.first_name }} {{ trainer.last_name }}</p>
+                                <p class="subtitle is-6">{{ trainer.email }}</p>
+                                <p>{{ trainer.phone_number }}</p>
+                                <p>Specialties: {{ trainer.trainer_profile.specialties|truncatewords:20 }}</p>
+                                <a href="{% url 'trainer_detail' trainer.trainer_profile.id %}" class="button is-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

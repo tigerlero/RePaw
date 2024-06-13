@@ -3,13 +3,44 @@
 {% block title %}Update Appointment{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update Appointment</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'appointment_detail' appointment.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update Appointment</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Dog</label>
+                <div class="control">
+                    {{ form.dog }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Doctor</label>
+                <div class="control">
+                    {{ form.doctor }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Date</label>
+                <div class="control">
+                    {{ form.date }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Reason</label>
+                <div class="control">
+                    {{ form.reason }}
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Update</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'appointment_detail' appointment.id %}" class="button is-secondary">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

@@ -7,9 +7,38 @@
     <h1>Update Walk</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'walk_detail' walk.id %}" class="btn btn-secondary">Cancel</a>
+        <div class="field">
+            <label class="label">Dog</label>
+            <div class="control">
+                {{ form.dog }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Walker</label>
+            <div class="control">
+                {{ form.walker }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Date</label>
+            <div class="control">
+                {{ form.date }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Duration</label>
+            <div class="control">
+                {{ form.duration }}
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button type="submit" class="button is-primary">Update</button>
+            </div>
+            <div class="control">
+                <a href="{% url 'walk_detail' walk.id %}" class="button is-secondary">Cancel</a>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -4,11 +4,17 @@
 
 {% block content %}
 <div class="container">
-    <h1>Delete User Profile</h1>
-    <p>Are you sure you want to delete the profile for {{ profile.username }}?</p>
+    <h1 class="title">Delete User Profile</h1>
+    <div class="content">
+        <p>Are you sure you want to delete the profile for {{ profile.username }}?</p>
+    </div>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Delete</button>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-danger">Delete</button>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

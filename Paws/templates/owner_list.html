@@ -3,26 +3,38 @@
 {% block title %}Owners List{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Owners List</h1>
-    <div class="row">
-        {% for owner in owners %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                {% if owner.profile_image %}
-                <img src="{{ owner.profile_image.url }}" class="card-img-top" alt="{{ owner.first_name }} {{ owner.last_name }}">
-                {% else %}
-                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ owner.first_name }} {{ owner.last_name }}</h5>
-                    <p class="card-text">{{ owner.email }}</p>
-                    <p class="card-text">{{ owner.phone_number }}</p>
-                    <p class="card-text">Number of Dogs: {{ owner.owner_profile.number_of_dogs }}</p>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Owners List</h1>
+        <div class="columns is-multiline">
+            {% for owner in owners %}
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            {% if owner.profile_image %}
+                            <img src="{{ owner.profile_image.url }}" alt="{{ owner.first_name }} {{ owner.last_name }}">
+                            {% else %}
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                            {% endif %}
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{ owner.first_name }} {{ owner.last_name }}</p>
+                                <p class="subtitle is-6">{{ owner.email }}</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p>{{ owner.phone_number }}</p>
+                            <p>Number of Dogs: {{ owner.owner_profile.number_of_dogs }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

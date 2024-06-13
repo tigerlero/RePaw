@@ -1,58 +1,130 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ breed.name }}{% endblock %}
+
 {% load static %}
+
 {% block content %}
-<div class="container">
-    <h1>{{ breed.name }}</h1>
-    <div class="row">
-        <div class="col-md-4">
+<section class="section">
+    <div class="container">
+        <h1 class="title">{{ breed.name }}</h1>
+        <div class="columns">
+            <div class="column is-one-quarter">
                 {% if breed.image %}
-                <img src="{{ breed.image.url }}" class="card-img-top" alt="{{ breed.name }}">
+                <img src="{{ breed.image.url }}" class="image" alt="{{ breed.name }}">
                 {% else %}
-                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default breed Image">
+                <img src="{% static 'images/default.jpg' %}" class="image" alt="Default breed Image">
                 {% endif %}
+            </div>
+            <div class="column">
+                <dl>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Characteristics:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.characteristics }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Temperament:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.temperament }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Origin:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.origin }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Lifespan:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.lifespan }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Size:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.size }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Coat Length:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.coat_length }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Shedding:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.get_shedding_display }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Exercise Needs:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.exercise_needs }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Trainability:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.trainability }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Health Issues:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.health_issues }}</dd>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <dt class="label">Special Needs:</dt>
+                        </div>
+                        <div class="field-body">
+                            <dd class="content">{{ breed.special_needs }}</dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
         </div>
-        <div class="col-md-8">
-            <dl class="row">
-                <dt class="col-sm-3">Characteristics:</dt>
-                <dd class="col-sm-9">{{ breed.characteristics }}</dd>
 
-                <dt class="col-sm-3">Temperament:</dt>
-                <dd class="col-sm-9">{{ breed.temperament }}</dd>
-
-                <dt class="col-sm-3">Origin:</dt>
-                <dd class="col-sm-9">{{ breed.origin }}</dd>
-
-                <dt class="col-sm-3">Lifespan:</dt>
-                <dd class="col-sm-9">{{ breed.lifespan }}</dd>
-
-                <dt class="col-sm-3">Size:</dt>
-                <dd class="col-sm-9">{{ breed.size }}</dd>
-
-                <dt class="col-sm-3">Coat Length:</dt>
-                <dd class="col-sm-9">{{ breed.coat_length }}</dd>
-
-                <dt class="col-sm-3">Shedding:</dt>
-                <dd class="col-sm-9">{{ breed.get_shedding_display }}</dd>
-
-                <dt class="col-sm-3">Exercise Needs:</dt>
-                <dd class="col-sm-9">{{ breed.exercise_needs }}</dd>
-
-                <dt class="col-sm-3">Trainability:</dt>
-                <dd class="col-sm-9">{{ breed.trainability }}</dd>
-
-                <dt class="col-sm-3">Health Issues:</dt>
-                <dd class="col-sm-9">{{ breed.health_issues }}</dd>
-
-                <dt class="col-sm-3">Special Needs:</dt>
-                <dd class="col-sm-9">{{ breed.special_needs }}</dd>
-            </dl>
+        <div class="buttons">
+            <a href="{% url 'breeds_list' %}" class="button is-secondary">Back to Breeds</a>
+            <a href="{% url 'update_breed' breed.name %}" class="button is-primary">Edit</a>
+            <a href="{% url 'delete_breed' breed.name %}" class="button is-danger">Delete</a>
         </div>
     </div>
-
-    <a href="{% url 'breeds_list' %}" class="btn btn-secondary">Back to Breeds</a>
-    <a href="{% url 'update_breed' breed.name %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'delete_breed' breed.name %}" class="btn btn-danger">Delete</a>
-</div>
+</section>
 {% endblock %}

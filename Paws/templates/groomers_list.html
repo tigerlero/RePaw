@@ -3,26 +3,37 @@
 {% block title %}Groomers List{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Groomers List</h1>
-    <div class="row">
-        {% for groomer in groomers %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                {% if groomer.profile_image %}
-                <img src="{{ groomer.profile_image.url }}" class="card-img-top" alt="{{ groomer.first_name }} {{ groomer.last_name }}">
-                {% else %}
-                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ groomer.first_name }} {{ groomer.last_name }}</h5>
-                    <p class="card-text">{{ groomer.email }}</p>
-                    <p class="card-text">{{ groomer.phone_number }}</p>
-                    <p class="card-text">Grooming Experience: {{ groomer.grooming_experience_years }} years</p>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Groomers List</h1>
+        <div class="columns is-multiline">
+            {% for groomer in groomers %}
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            {% if groomer.profile_image %}
+                            <img src="{{ groomer.profile_image.url }}" alt="{{ groomer.first_name }} {{ groomer.last_name }}">
+                            {% else %}
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                            {% endif %}
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{ groomer.first_name }} {{ groomer.last_name }}</p>
+                                <p class="subtitle is-6">{{ groomer.email }}</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p>{{ groomer.phone_number }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

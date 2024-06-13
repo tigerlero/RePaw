@@ -3,13 +3,19 @@
 {% block title %}{{ shelter.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ shelter.name }}</h1>
-    <p><strong>Location:</strong> {{ shelter.location }}</p>
-    <p><strong>Phone Number:</strong> {{ shelter.phone_number }}</p>
-    <p><strong>Email:</strong> {{ shelter.email }}</p>
-    <a href="{% url 'shelter_list' %}" class="btn btn-secondary">Back to Shelters List</a>
-    <a href="{% url 'shelter_update' shelter.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'shelter_delete' shelter.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">{{ shelter.name }}</h1>
+        <div class="content">
+            <p><strong>Location:</strong> {{ shelter.location }}</p>
+            <p><strong>Phone Number:</strong> {{ shelter.phone_number }}</p>
+            <p><strong>Email:</strong> {{ shelter.email }}</p>
+        </div>
+        <div class="buttons mt-4">
+            <a href="{% url 'shelter_list' %}" class="button is-link">Back to Shelters List</a>
+            <a href="{% url 'shelter_update' shelter.id %}" class="button is-warning">Update</a>
+            <a href="{% url 'shelter_delete' shelter.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

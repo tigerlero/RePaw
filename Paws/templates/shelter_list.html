@@ -1,27 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Shelters List{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Shelters List</h1>
-    <div class="row">
-        {% for shelter in shelters %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                {% if shelter.profile_image %}
-                <img src="{{ shelter.profile_image.url }}" class="card-img-top" alt="{{ shelter.first_name }} {{ shelter.last_name }}">
-                {% else %}
-                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ shelter.first_name }} {{ shelter.last_name }}</h5>
-                    <p class="card-text">{{ shelter.email }}</p>
-                    <p class="card-text">{{ shelter.phone_number }}</p>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Shelters List</h1>
+        <div class="columns is-multiline">
+            {% for shelter in shelters %}
+            <div class="column is-one-third">
+                <div class="card">
+                    <div class="card-image">
+                        {% if shelter.profile_image %}
+                        <figure class="image is-4by3">
+                            <img src="{{ shelter.profile_image.url }}" alt="{{ shelter.first_name }} {{ shelter.last_name }}">
+                        </figure>
+                        {% else %}
+                        <figure class="image is-4by3">
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                        </figure>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <p class="title is-4">{{ shelter.first_name }} {{ shelter.last_name }}</p>
+                            <p class="subtitle is-6">{{ shelter.email }}</p>
+                            <p>{{ shelter.phone_number }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

@@ -3,14 +3,16 @@
 {% block title %}Microchips{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Microchips</h1>
-    <ul class="list-group">
-        {% for microchip in microchips %}
-            <li class="list-group-item">
-                <a href="{% url 'microchip_detail' microchip.id %}">{{ microchip.id_number }}</a>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Microchips</h1>
+        <ul class="list">
+            {% for microchip in microchips %}
+            <li>
+                <a href="{% url 'microchip_detail' microchip.id %}" class="button is-link">{{ microchip.id_number }}</a>
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

@@ -3,27 +3,39 @@
 {% block title %}Doctors List{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Doctors List</h1>
-    <div class="row">
-        {% for doctor in doctors %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                {% if doctor.profile_image %}
-                <img src="{{ doctor.profile_image.url }}" class="card-img-top" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
-                {% else %}
-                <img src="{% static 'images/default-profile.jpg' %}" class="card-img-top" alt="Default Profile Image">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
-                    <p class="card-text">{{ doctor.email }}</p>
-                    <p class="card-text">{{ doctor.phone_number }}</p>
-                    <p class="card-text">Speciality: {{ doctor.speciality }}</p>
-                    <p class="card-text">Clinic Address: {{ doctor.clinic_address }}</p>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Doctors List</h1>
+        <div class="columns is-multiline">
+            {% for doctor in doctors %}
+            <div class="column is-one-third">
+                <div class="card">
+                    <div class="card-image">
+                        {% if doctor.profile_image %}
+                        <figure class="image is-4by3">
+                            <img src="{{ doctor.profile_image.url }}" alt="{{ doctor.first_name }} {{ doctor.last_name }}">
+                        </figure>
+                        {% else %}
+                        <figure class="image is-4by3">
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                        </figure>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-5">{{ doctor.first_name }} {{ doctor.last_name }}</p>
+                                <p class="subtitle is-6">{{ doctor.email }}</p>
+                                <p class="subtitle is-6">{{ doctor.phone_number }}</p>
+                                <p class="subtitle is-6">Speciality: {{ doctor.speciality }}</p>
+                                <p class="subtitle is-6">Clinic Address: {{ doctor.clinic_address }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

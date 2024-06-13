@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>User Profile</h1>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>First Name:</strong> {{ user.first_name }}</p>
-    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-    <!-- Add more profile information as needed -->
+    <h1 class="title">User Profile</h1>
+    <div class="content">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>First Name:</strong> {{ user.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+        <!-- Add more profile information as needed -->
+    </div>
 
-    <h2>Update Profile</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-    </form>
+    <h2 class="title mt-5">Update Profile</h2>
+    {% if userprofile.id %}
+        <a href="{% url 'user_profile_update' profile_id=userprofile.id %}" class="button is-primary">Update Profile</a>
+    {% else %}
+        <p>No profile found. Please create a profile to update.</p>
+    {% endif %}
 </div>
 {% endblock %}

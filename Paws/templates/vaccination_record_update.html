@@ -4,12 +4,18 @@
 
 {% block content %}
 <div class="container">
-    <h1>Update Vaccination Record</h1>
+    <h1 class="title">Update Vaccination Record</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'vaccination_record_detail' vaccination_record.id %}" class="btn btn-secondary">Cancel</a>
+        <div class="field is-grouped">
+            <div class="control">
+                <button type="submit" class="button is-primary">Update</button>
+            </div>
+            <div class="control">
+                <a href="{% url 'vaccination_record_detail' vaccination_record.id %}" class="button is-secondary">Cancel</a>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

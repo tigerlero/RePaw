@@ -3,14 +3,16 @@
 {% block title %}Trainings{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Trainings</h1>
-    <ul class="list-group">
-        {% for training in trainings %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">Trainings</h1>
+        <ul class="list-group">
+            {% for training in trainings %}
             <li class="list-group-item">
                 <a href="{% url 'training_detail' training.id %}">{{ training.training_type }} - {{ training.date }}</a>
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

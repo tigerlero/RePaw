@@ -321,12 +321,12 @@ def owner_detail(request, owner_id):
 def owner_update(request, owner_id):
     owner = get_object_or_404(Owner, pk=owner_id)
     if request.method == 'POST':
-        form = OwnerForm(request.POST, instance=owner)
+        form = OwnerForm(request.POST, instance=owner)  # Bind form to existing instance
         if form.is_valid():
-            form.save()
+            form.save()  # Save the form to update the existing owner instance
             return redirect('owner_detail', owner_id=owner.id)
     else:
-        form = OwnerForm(instance=owner)
+        form = OwnerForm(instance=owner)  # Populate form with existing data
     return render(request, 'owner_update.html', {'form': form, 'owner': owner})
 
 
@@ -641,14 +641,12 @@ def dog_breed_prediction_delete(request, prediction_id):
 @login_required
 def user_profile(request):
     user = request.user
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-    else:
-        form = UserProfileForm(instance=user)
-    return render(request, 'user_profile.html', {'form': form})
+    userprofile = UserProfile.objects.get(user=user)  # Assuming UserProfile model has a ForeignKey to User
+    context = {
+        'user': user,
+        'userprofile': userprofile,
+    }
+    return render(request, 'user_profile.html', context)
 
 
 @login_required
@@ -659,12 +657,12 @@ def user_profile_list(request):
 
 @login_required
 def user_profile_update(request, profile_id):
-    profile = get_object_or_404(User, pk=profile_id)
+    profile = get_object_or_404(UserProfile, pk=profile_id)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('user_profile_list')
+            return redirect('user_profile_list')  # Replace with your actual URL name
     else:
         form = UserProfileForm(instance=profile)
     return render(request, 'user_profile_update.html', {'form': form, 'profile': profile})

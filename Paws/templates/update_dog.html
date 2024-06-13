@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Update {{ dog.name }}{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Update {{ dog.name }}</h1>
-    <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
+    <h1 class="title">Update {{ dog.name }}</h1>
+    <form method="post" enctype="multipart/form-data" class="mt-5">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Save</button>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

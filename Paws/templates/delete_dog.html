@@ -3,13 +3,21 @@
 {% block title %}Delete {{ dog.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Delete {{ dog.name }}</h1>
-    <p>Are you sure you want to delete {{ dog.name }}?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="{% url 'dog_detail' dog.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Delete {{ dog.name }}</h1>
+        <p>Are you sure you want to delete {{ dog.name }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-danger">Delete</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'dog_detail' dog.id %}" class="button is-light">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

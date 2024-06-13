@@ -4,11 +4,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>Vaccination Records</h1>
+    <h1 class="title">Vaccination Records</h1>
     <ul class="list-group">
         {% for vaccination_record in vaccination_records %}
             <li class="list-group-item">
-                <a href="{% url 'vaccination_record_detail' vaccination_record.id %}">{{ vaccination_record.dog.name }} - {{ vaccination_record.vaccine_name }}</a>
+                <a href="{% url 'vaccination_record_detail' vaccination_record.id %}">
+                    {{ vaccination_record.dog.name }} - {{ vaccination_record.vaccine_name }}
+                </a>
             </li>
         {% endfor %}
     </ul>

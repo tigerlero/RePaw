@@ -3,16 +3,22 @@
 {% block title %}Create Breed{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Create Breed</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Create Breed</h1>
+        <div class="columns">
+            <div class="column is-half">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

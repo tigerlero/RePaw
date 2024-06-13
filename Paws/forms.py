@@ -10,6 +10,21 @@ class DogForm(forms.ModelForm):
     class Meta:
         model = Dog
         fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'input'}),
+            'age': forms.NumberInput(attrs={'class': 'input'}),
+            'sex': forms.Select(attrs={'class': 'select'}),
+            'breed': forms.TextInput(attrs={'class': 'input'}),
+            'description': forms.Textarea(attrs={'class': 'textarea'}),
+            'owner': forms.Select(attrs={'class': 'select'}),
+            'shelter': forms.Select(attrs={'class': 'select'}),
+            'weight': forms.NumberInput(attrs={'class': 'input'}),
+            'height': forms.NumberInput(attrs={'class': 'input'}),
+            'color': forms.TextInput(attrs={'class': 'input'}),
+            'eye_color': forms.TextInput(attrs={'class': 'input'}),
+            'last_known_location': forms.TextInput(attrs={'class': 'input'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'file-input'}),
+        }
 
 
 class BreedForm(forms.ModelForm):
@@ -33,7 +48,7 @@ class FriendlySpotForm(forms.ModelForm):
 class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
-        fields = '__all__'
+        fields = ['number_of_dogs']
 
 
 class ShelterForm(forms.ModelForm):
@@ -126,6 +141,10 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2',
                   'is_shelter', 'is_owner', 'is_doctor', 'is_walker', 'is_sitter', 'is_groomer', 'is_trainer']
 
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].required = True  # Make username required
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
@@ -147,34 +166,41 @@ class AdoptionForm(forms.ModelForm):
         model = Adoption
         fields = '__all__'
         widgets = {
-            'birth_date': forms.DateInput(attrs={'type': 'date'}),
-            'email': forms.EmailInput(),
-            'home_phone': forms.TextInput(attrs={'type': 'tel'}),
-            'work_phone': forms.TextInput(attrs={'type': 'tel'}),
-            'mobile_phone': forms.TextInput(attrs={'type': 'tel'}),
-            'facebook_profile': forms.URLInput(),
-            'instagram_profile': forms.URLInput(),
-            'adults_in_home': forms.NumberInput(),
-            'fence_height': forms.NumberInput(),
-            'current_pets': forms.Textarea(attrs={'rows': 1}),
-            'past_pets': forms.Textarea(attrs={'rows': 1}),
-            'adoption_reason': forms.Textarea(attrs={'rows': 1}),
-            'caretaker_info': forms.Textarea(attrs={'rows': 1}),
-            'if_not_neuter_reason': forms.Textarea(attrs={'rows': 1}),
-            'pet_location_day_home': forms.Textarea(attrs={'rows': 1}),
-            'pet_location_day_away': forms.Textarea(attrs={'rows': 1}),
-            'pet_location_night': forms.Textarea(attrs={'rows': 1}),
-            'pet_location_long_absence': forms.Textarea(attrs={'rows': 1}),
-            'walk_time': forms.Textarea(attrs={'rows': 1}),
-            'alone_time': forms.NumberInput(),
-            'moving_plan': forms.Textarea(attrs={'rows': 1}),
-            'bad_behavior_response': forms.Textarea(attrs={'rows': 1}),
-            'children_info': forms.Textarea(attrs={'rows': 1}),
-            'preferences': forms.Textarea(attrs={'rows': 1}),
-            'pet_character': forms.Textarea(attrs={'rows': 1}),
-            'willing_to_host_special_needs': forms.Textarea(attrs={'rows': 1}),
-            'additional_info': forms.Textarea(attrs={'rows': 1}),
-            'accepted_terms': forms.CheckboxInput(),
+            'name': forms.TextInput(attrs={'class': 'input'}),
+            'birth_date': forms.DateInput(attrs={'class': 'input'}),
+            'email': forms.EmailInput(attrs={'class': 'input'}),
+            'address': forms.TextInput(attrs={'class': 'input'}),
+            'city': forms.TextInput(attrs={'class': 'input'}),
+            'postal_code': forms.TextInput(attrs={'class': 'input'}),
+            'mobile_phone': forms.TextInput(attrs={'class': 'input'}),
+            'adults_in_home': forms.NumberInput(attrs={'class': 'input'}),
+            'children_info': forms.TextInput(attrs={'class': 'input'}),
+            'allergies': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'home_type': forms.Select(attrs={'class': 'select'}),
+            'fence_height': forms.NumberInput(attrs={'class': 'input'}),
+            'escape_possibility': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'current_pets': forms.TextInput(attrs={'class': 'input'}),
+            'past_pets': forms.TextInput(attrs={'class': 'input'}),
+            'abandoned_pet': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'adopted_before': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'adoption_reason': forms.TextInput(attrs={'class': 'input'}),
+            'family_agreement': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'caretaker_info': forms.TextInput(attrs={'class': 'input'}),
+            'plan_to_neuter': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'if_not_neuter_reason': forms.TextInput(attrs={'class': 'input'}),
+            'pet_location_day_home': forms.TextInput(attrs={'class': 'input'}),
+            'pet_location_day_away': forms.TextInput(attrs={'class': 'input'}),
+            'pet_location_night': forms.TextInput(attrs={'class': 'input'}),
+            'pet_location_long_absence': forms.TextInput(attrs={'class': 'input'}),
+            'walk_time': forms.TextInput(attrs={'class': 'input'}),
+            'alone_time': forms.NumberInput(attrs={'class': 'input'}),
+            'moving_plan': forms.TextInput(attrs={'class': 'input'}),
+            'bad_behavior_response': forms.TextInput(attrs={'class': 'input'}),
+            'preferences': forms.TextInput(attrs={'class': 'input'}),
+            'pet_character': forms.TextInput(attrs={'class': 'input'}),
+            'willing_to_host_special_needs': forms.TextInput(attrs={'class': 'input'}),
+            'additional_info': forms.TextInput(attrs={'class': 'input'}),
+            'accepted_terms': forms.CheckboxInput(attrs={'class': 'checkbox'}),
         }
 
     #

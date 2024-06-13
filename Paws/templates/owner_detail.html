@@ -1,14 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ owner.first_name }} {{ owner.last_name }}{% endblock %}
+
+{% block title %}{{ owner.userprofile.first_name }} {{ owner.userprofile.last_name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ owner.first_name }} {{ owner.last_name }}</h1>
-    <p><strong>Email:</strong> {{ owner.email }}</p>
-    <p><strong>Phone Number:</strong> {{ owner.phone_number }}</p>
-    <a href="{% url 'owner_list' %}" class="btn btn-secondary">Back to Owners List</a>
-    <a href="{% url 'owner_update' owner.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'owner_delete' owner.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="card">
+                    <div class="card-image">
+                        {% if owner.userprofile.profile_image %}
+                            <figure class="image is-4by3">
+                                <img src="{{ owner.userprofile.profile_image.url }}" alt="Profile Image">
+                            </figure>
+                        {% else %}
+                            <figure class="image is-4by3">
+                                <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                            </figure>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{ owner.userprofile.first_name }} {{ owner.userprofile.last_name }}</p>
+                                <p><strong>Email:</strong> {{ owner.userprofile.email }}</p>
+                                <p><strong>Phone Number:</strong> {{ owner.userprofile.phone_number }}</p>
+                                <p><strong>Number of Dogs:</strong> {{ owner.number_of_dogs }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="{% url 'owners_list' %}" class="card-footer-item">Back to Owners List</a>
+                        <a href="{% url 'owner_update' owner.id %}" class="card-footer-item">Update</a>
+                        <a href="{% url 'owner_delete' owner.id %}" class="card-footer-item">Delete</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

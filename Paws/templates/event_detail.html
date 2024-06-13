@@ -8,8 +8,16 @@
     <p><strong>Date:</strong> {{ event.date }}</p>
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p><strong>Description:</strong> {{ event.description }}</p>
-    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Events List</a>
-    <a href="{% url 'event_update' event.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
+    <div class="field is-grouped">
+        <div class="control">
+            <a href="{% url 'event_list' %}" class="button is-secondary">Back to Events List</a>
+        </div>
+        <div class="control">
+            <a href="{% url 'event_update' event.id %}" class="button is-warning">Update</a>
+        </div>
+        <div class="control">
+            <a href="{% url 'event_delete' event.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

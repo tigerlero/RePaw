@@ -1,18 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>Login</h1>
-    <form method="post" action="">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <p class="mt-3">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-    {% if error_message %}
-    <div class="alert alert-danger mt-3" role="alert">
-      {{ error_message }}
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-one-third">
+                <div class="box">
+                    <h1 class="title has-text-centered">Login</h1>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Enter your username" name="username">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Enter your password" name="password">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary is-fullwidth">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% if error_message %}
+                    <div class="notification is-danger mt-3">
+                        {{ error_message }}
+                    </div>
+                    {% endif %}
+                    <p class="mt-3 has-text-centered">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-  </div>
+</section>
 {% endblock %}

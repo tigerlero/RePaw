@@ -3,13 +3,44 @@
 {% block title %}Update {{ shelter.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update {{ shelter.name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'shelter_detail' shelter.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update {{ shelter.name }}</h1>
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        {{ form.name.label(class="label") }}
+                        <div class="control">
+                            {{ form.name(class="input", placeholder="Enter shelter name") }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{ form.email.label(class="label") }}
+                        <div class="control">
+                            {{ form.email(class="input", placeholder="Enter email") }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{ form.phone_number.label(class="label") }}
+                        <div class="control">
+                            {{ form.phone_number(class="input", placeholder="Enter phone number") }}
+                        </div>
+                    </div>
+                    <!-- Add more fields as needed -->
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Update</button>
+                        </div>
+                        <div class="control">
+                            <a href="{% url 'shelter_detail' shelter.id %}" class="button is-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

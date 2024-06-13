@@ -3,24 +3,32 @@
 {% block title %}{{ food.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ food.name }}</h1>
-    <p><strong>Ingredients:</strong> {{ food.ingredients }}</p>
-    <p><strong>Nutritional Content:</strong> {{ food.nutritional_content }}</p>
-    <p><strong>Suitable for Age Groups:</strong> {{ food.suitable_for_age_groups }}</p>
-    <p><strong>Dietary Restrictions:</strong> {{ food.dietary_restrictions }}</p>
-    <p><strong>Weight Management:</strong> {{ food.weight_management|yesno:"Yes,No" }}</p>
-    <p><strong>Dental Health:</strong> {{ food.dental_health|yesno:"Yes,No" }}</p>
-    <p><strong>Skin and Coat Health:</strong> {{ food.skin_and_coat_health|yesno:"Yes,No" }}</p>
-    <p><strong>Digestion Health:</strong> {{ food.digestion_health|yesno:"Yes,No" }}</p>
-    <h2>Recommended Breeds</h2>
-    <ul>
-        {% for breed in food.recommended_breeds.all %}
-            <li>{{ breed.name }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'food_list' %}" class="btn btn-secondary">Back to Food List</a>
-    <a href="{% url 'food_update' food.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'food_delete' food.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">{{ food.name }}</h1>
+        <div class="content">
+            <p><strong>Ingredients:</strong> {{ food.ingredients }}</p>
+            <p><strong>Nutritional Content:</strong> {{ food.nutritional_content }}</p>
+            <p><strong>Suitable for Age Groups:</strong> {{ food.suitable_for_age_groups }}</p>
+            <p><strong>Dietary Restrictions:</strong> {{ food.dietary_restrictions }}</p>
+            <p><strong>Weight Management:</strong> {{ food.weight_management|yesno:"Yes,No" }}</p>
+            <p><strong>Dental Health:</strong> {{ food.dental_health|yesno:"Yes,No" }}</p>
+            <p><strong>Skin and Coat Health:</strong> {{ food.skin_and_coat_health|yesno:"Yes,No" }}</p>
+            <p><strong>Digestion Health:</strong> {{ food.digestion_health|yesno:"Yes,No" }}</p>
+        </div>
+
+        <h2 class="subtitle">Recommended Breeds</h2>
+        <ul>
+            {% for breed in food.recommended_breeds.all %}
+                <li>{{ breed.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'food_list' %}" class="button is-secondary">Back to Food List</a>
+            <a href="{% url 'food_update' food.id %}" class="button is-warning">Update</a>
+            <a href="{% url 'food_delete' food.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

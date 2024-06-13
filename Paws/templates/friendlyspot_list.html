@@ -3,14 +3,18 @@
 {% block title %}Friendly Spots{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Friendly Spots</h1>
-    <ul class="list-group">
-        {% for spot in spots %}
-            <li class="list-group-item">
-                <a href="{% url 'friendlyspot_detail' spot.id %}">{{ spot.name }}</a>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Friendly Spots</h1>
+        <ul class="list">
+            {% for spot in spots %}
+            <li>
+                <a href="{% url 'friendlyspot_detail' spot.id %}" class="box">
+                    <span>{{ spot.name }}</span>
+                </a>
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

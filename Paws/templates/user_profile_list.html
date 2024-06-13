@@ -3,12 +3,26 @@
 {% block title %}User Profiles{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>User Profiles</h1>
-    <ul>
-        {% for profile in profiles %}
-            <li>{{ profile.username }} - <a href="{% url 'profile_update' profile.id %}">Edit</a> | <a href="{% url 'profile_delete' profile.id %}">Delete</a></li>
-        {% endfor %}
-    </ul>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">User Profiles</h1>
+        <ul class="content">
+            {% for profile in profiles %}
+            <li>
+                <div class="columns is-vcentered">
+                    <div class="column is-three-quarters">
+                        <span class="has-text-weight-semibold">{{ profile.username }}</span>
+                    </div>
+                    <div class="column">
+                        <div class="buttons">
+                            <a href="{% url 'profile_update' profile.id %}" class="button is-warning is-small">Edit</a>
+                            <a href="{% url 'profile_delete' profile.id %}" class="button is-danger is-small">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

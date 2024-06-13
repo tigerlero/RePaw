@@ -3,12 +3,21 @@
 {% block title %}Create Walk{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Create Walk</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Create Walk</button>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Create Walk</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Create Walk</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'walks_list' %}" class="button is-light">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

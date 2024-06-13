@@ -79,7 +79,7 @@ class UserProfile(models.Model):
     email = models.EmailField(unique=False, null=True)
     phone_number = models.CharField(max_length=15, default="")
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)  # Add this line
-    city = models.CharField(max_length=100, default="")
+    city = models.CharField(max_length=100, default="", null=True)
     is_owner = models.BooleanField(default=False)
     is_shelter = models.BooleanField(default=False)
     is_doctor = models.BooleanField(default=False)
@@ -115,11 +115,7 @@ class Adoption(models.Model):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=10)
-    home_phone = models.CharField(max_length=15, blank=True, null=True)
-    work_phone = models.CharField(max_length=15, blank=True, null=True)
     mobile_phone = models.CharField(max_length=15)
-    facebook_profile = models.URLField(blank=True, null=True)
-    instagram_profile = models.URLField(blank=True, null=True)
 
     # Family Information
     adults_in_home = models.PositiveIntegerField()

@@ -4,106 +4,87 @@
 
 {% block content %}
 <!-- Page content -->
-    <div class="container my-5">
-        <!-- Dogs for Adoption Section -->
-        <h2 class="my-4">Dogs for Adoption</h2>
-        <div class="row">
-            {% for dog in dogs %}
-            {% if dog.is_not_adopted %}
+<div class="container my-5">
+    <!-- Dogs for Adoption Section -->
+    <h2 class="my-4 title is-4">Dogs for Adoption</h2>
+    <div class="columns is-multiline">
+        {% for dog in dogs %}
+        {% if dog.is_not_adopted %}
+        {% include 'dog_card_2.html' with dog=dog %}
+        {% endif %}
+        {% endfor %}
+    </div>
 
-                {% include 'dog_card_2.html' with dog=dog %}
+    <!-- Featured Dogs Section -->
+    <h2 class="my-4 title is-4">Featured Dogs</h2>
+    <div class="columns is-multiline">
+        {% for dog in featured_dogs %}
+        {% include 'dog_card_2.html' with dog=dog %}
+        {% endfor %}
+    </div>
 
-            {% endif %}
-            {% endfor %}
+    <!-- Upcoming Events Section -->
+    <h2 class="my-4 title is-4">Upcoming Events</h2>
+    <div class="columns is-multiline">
+        {% for event in events %}
+        <div class="column is-half">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="title is-5">{{ event.title }}</h5>
+                    <p>{{ event.date }} at {{ event.location }}</p>
+                    <p>{{ event.description|truncatewords:20 }}</p>
+                    <a href="{% url 'event_detail' event.id %}" class="button is-primary">Learn More</a>
+                </div>
+            </div>
         </div>
+        {% endfor %}
+    </div>
 
-        <!-- Featured Dogs Section -->
-        <h2 class="my-4">Featured Dogs</h2>
-        <div id="featuredDogsCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for dog in featured_dogs %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ dog.image.url }}" class="d-block w-100 breed-img" alt="{{ dog.name }}">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ dog.name }}</h5>
-                        <p>{{ dog.breed }}</p>
-                    </div>
+    <!-- Testimonials Section -->
+    <h2 class="my-4 title is-4">Testimonials</h2>
+    <div class="columns is-multiline">
+        {% for testimonial in testimonials %}
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <p>"{{ testimonial.content }}"</p>
+                    <p><small>- {{ testimonial.author }}</small></p>
                 </div>
-                {% endfor %}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#featuredDogsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#featuredDogsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
+        {% endfor %}
+    </div>
 
-        <!-- Upcoming Events Section -->
-        <h2 class="my-4">Upcoming Events</h2>
-        <div class="row">
-            {% for event in events %}
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ event.title }}</h5>
-                        <p class="card-text">{{ event.date }} at {{ event.location }}</p>
-                        <p class="card-text">{{ event.description|truncatewords:20 }}</p>
-                        <a href="{% url 'event_detail' event.id %}" class="btn btn-primary">Learn More</a>
-                    </div>
+    <!-- Resources Section -->
+    <h2 class="my-4 title is-4">Resources</h2>
+    <div class="columns is-multiline">
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="title is-5">Dog Care Tips</h5>
+                    <p>Useful tips to take care of your beloved dog.</p>
+                    <a href="{% url 'resource_detail' 'dog-care-tips' %}" class="button is-primary">Read More</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
-        <!-- Testimonials Section -->
-        <h2 class="my-4">Testimonials</h2>
-        <div class="row">
-            {% for testimonial in testimonials %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">"{{ testimonial.content }}"</p>
-                        <p class="card-text"><small>- {{ testimonial.author }}</small></p>
-                    </div>
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="title is-5">Training Guides</h5>
+                    <p>Comprehensive guides to train your dog effectively.</p>
+                    <a href="{% url 'resource_detail' 'training-guides' %}" class="button is-primary">Read More</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
-        <!-- Resources Section -->
-        <h2 class="my-4">Resources</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Dog Care Tips</h5>
-                        <p class="card-text">Useful tips to take care of your beloved dog.</p>
-                        <a href="{% url 'resource_detail' 'dog-care-tips' %}" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Training Guides</h5>
-                        <p class="card-text">Comprehensive guides to train your dog effectively.</p>
-                        <a href="{% url 'resource_detail' 'training-guides' %}" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Health & Nutrition</h5>
-                        <p class="card-text">Essential information on maintaining your dog's health and diet.</p>
-                        <a href="{% url 'resource_detail' 'health-nutrition' %}" class="btn btn-primary">Read More</a>
-                    </div>
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="title is-5">Health & Nutrition</h5>
+                    <p>Essential information on maintaining your dog's health and diet.</p>
+                    <a href="{% url 'resource_detail' 'health-nutrition' %}" class="button is-primary">Read More</a>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 {% endblock %}

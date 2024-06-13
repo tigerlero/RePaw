@@ -4,41 +4,51 @@
 
 {% block content %}
 <div class="container">
-    <h1>Dogs</h1>
-    <a href="{% url 'create_dog' %}" class="btn btn-primary mb-4">Create New Dog</a>
+    <h1 class="title">Dogs</h1>
+    <a href="{% url 'create_dog' %}" class="button is-primary mb-4">Create New Dog</a>
 
-    <h2>Dogs for Adoption</h2>
-    <div class="row">
+    <h2 class="subtitle">Dogs for Adoption</h2>
+    <div class="columns is-multiline is-4">
         {% for dog in dogs_for_adoption %}
-        {% include 'dog_card.html' %}
+        <div class="column is-one-quarter">
+            {% include 'dog_card.html' %}
+        </div>
         {% endfor %}
     </div>
 
-    <h2>Sick Dogs</h2>
-    <div class="row">
+    <h2 class="subtitle">Sick Dogs</h2>
+    <div class="columns is-multiline is-4">
         {% for dog in sick_dogs %}
-        {% include 'dog_card.html' %}
+        <div class="column is-one-quarter">
+            {% include 'dog_card.html' %}
+        </div>
         {% endfor %}
     </div>
 
-    <h2>Modeling Dogs</h2>
-    <div class="row">
+    <h2 class="subtitle">Modeling Dogs</h2>
+    <div class="columns is-multiline is-4">
         {% for dog in modeling_dogs %}
-        {% include 'dog_card.html' %}
+        <div class="column is-one-quarter">
+            {% include 'dog_card.html' %}
+        </div>
         {% endfor %}
     </div>
 
-    <h2>Most Trained Dogs</h2>
-    <div class="row">
+    <h2 class="subtitle">Most Trained Dogs</h2>
+    <div class="columns is-multiline is-4">
         {% for dog in most_trained_dogs %}
-        {% include 'dog_card.html' %}
+        <div class="column is-one-quarter">
+            {% include 'dog_card.html' %}
+        </div>
         {% endfor %}
     </div>
 
-    <h2>Trainer's Dogs</h2>
-    <div class="row">
+    <h2 class="subtitle">Trainer's Dogs</h2>
+    <div class="columns is-multiline is-4">
         {% for dog in trainers_dogs %}
-        {% include 'dog_card.html' %}
+        <div class="column is-one-quarter">
+            {% include 'dog_card.html' %}
+        </div>
         {% endfor %}
     </div>
 </div>

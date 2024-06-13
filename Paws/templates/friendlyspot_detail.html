@@ -3,13 +3,19 @@
 {% block title %}{{ spot.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ spot.name }}</h1>
-    <p><strong>Location:</strong> {{ spot.location }}</p>
-    <p><strong>Description:</strong> {{ spot.description }}</p>
-    <p><strong>Dog Friendly:</strong> {{ spot.dog_friendly|yesno:"Yes,No" }}</p>
-    <a href="{% url 'friendlyspot_list' %}" class="btn btn-secondary">Back to Friendly Spots List</a>
-    <a href="{% url 'friendlyspot_update' spot.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'friendlyspot_delete' spot.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">{{ spot.name }}</h1>
+        <div class="content">
+            <p><strong>Location:</strong> {{ spot.location }}</p>
+            <p><strong>Description:</strong> {{ spot.description }}</p>
+            <p><strong>Dog Friendly:</strong> {{ spot.dog_friendly|yesno:"Yes,No" }}</p>
+            <div class="buttons">
+                <a href="{% url 'friendlyspot_list' %}" class="button is-link">Back to Friendly Spots List</a>
+                <a href="{% url 'friendlyspot_update' spot.id %}" class="button is-warning">Update</a>
+                <a href="{% url 'friendlyspot_delete' spot.id %}" class="button is-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

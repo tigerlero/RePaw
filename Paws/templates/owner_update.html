@@ -1,15 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Update {{ owner.first_name }} {{ owner.last_name }}{% endblock %}
+{% block title %}Update {{ owner.userprofile.first_name }} {{ owner.userprofile.last_name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update {{ owner.first_name }} {{ owner.last_name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'owner_detail' owner.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update {{ owner.userprofile.first_name }} {{ owner.userprofile.last_name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="number_of_dogs" class="label">Number of Dogs</label>
+                <div class="control">
+                    <input type="number" id="number_of_dogs" name="number_of_dogs" class="input" placeholder="Enter number of dogs" value="{% if form.number_of_dogs.value %}{{ form.number_of_dogs.value }}{% elif owner.number_of_dogs %}{{ owner.number_of_dogs }}{% endif %}">
+                </div>
+            </div>
+            <!-- Include other fields as needed -->
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Update</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'owner_detail' owner.id %}" class="button is-secondary">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

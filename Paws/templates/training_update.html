@@ -3,13 +3,50 @@
 {% block title %}Update Training{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Update Training</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'training_detail' training.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Update Training</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.name.label_tag }}
+                <div class="control">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.description.label_tag }}
+                <div class="control">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.start_date.label_tag }}
+                <div class="control">
+                    {{ form.start_date }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.end_date.label_tag }}
+                <div class="control">
+                    {{ form.end_date }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.trainer.label_tag }}
+                <div class="control">
+                    {{ form.trainer }}
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Update</button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'training_detail' training.id %}" class="button is-secondary">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

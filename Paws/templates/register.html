@@ -1,25 +1,177 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>Register</h1>
-    <form method="post" action="">
-      {% csrf_token %}
-      {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-          Please correct the following errors:
-          <ul>
-            {% for field, errors in form.errors.items %}
-              {% for error in errors %}
-                <li>{{ field|title }}: {{ error }}</li>
-              {% endfor %}
-            {% endfor %}
-          </ul>
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-one-third">
+                <div class="box">
+                    <h1 class="title has-text-centered">Register</h1>
+                    <form method="post" action="">
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                        <div class="notification is-danger">
+                            <button class="delete"></button>
+                            Please correct the following errors:
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                    <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Enter your username" name="username">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                          <label class="label">First Name</label>
+                          <div class="control has-icons-left">
+                              <input class="input" type="text" placeholder="Enter your first name" name="first_name">
+                              <span class="icon is-small is-left">
+                                  <i class="fas fa-user"></i>
+                              </span>
+                          </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Last Name</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Enter your last name" name="last_name">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                          <label class="label">Phone Number</label>
+                          <div class="control has-icons-left">
+                              <input class="input" type="text" placeholder="Enter your phone number" name="phone_number">
+                              <span class="icon is-small is-left">
+                                  <i class="fas fa-phone"></i>
+                              </span>
+                          </div>
+                        </div>
+
+
+                        <!-- Example form with Bulma and custom checkbox styling -->
+                        <div class="columns is-multiline">
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_shelter" id="is_shelter">
+                <span class="checkbox-label">Shelter</span>
+            </label>
         </div>
-      {% endif %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <p class="mt-3">Already have an account? <a href="{% url 'login' %}">Login</a></p>
-  </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_owner" id="is_owner">
+                <span class="checkbox-label">Owner</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_doctor" id="is_doctor">
+                <span class="checkbox-label">Doctor</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_walker" id="is_walker">
+                <span class="checkbox-label">Walker</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_sitter" id="is_sitter">
+                <span class="checkbox-label">Sitter</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_groomer" id="is_groomer">
+                <span class="checkbox-label">Groomer</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="column is-one-third">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_trainer" id="is_trainer">
+                <span class="checkbox-label">Trainer</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+
+
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="email" placeholder="Enter your email" name="email">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Enter your password" name="password1">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Confirm Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="password" placeholder="Confirm your password" name="password2">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary is-fullwidth">Register</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="mt-3 has-text-centered">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

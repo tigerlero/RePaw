@@ -4,41 +4,45 @@
 {% block title %}{{ dog.name }}{% endblock %}
 
 {% block content %}
-<div class="container-sm">
-    <div class="row">
-        <div class="col-md-4">
+<div class="container">
+    <div class="columns">
+        <div class="column is-one-third">
             {% if dog.image %}
-            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" class="img-thumbnail rounded">
+            <figure class="image is-4by3">
+                <img src="{{ dog.image.url }}" alt="{{ dog.name }}">
+            </figure>
             {% else %}
             <p>No image available</p>
             {% endif %}
         </div>
-        <div class="col-md-6">
-            <h1>{{ dog.name }}</h1>
-            <p>Breed: {{ dog.breed }}</p>
-            <p>Age: {{ dog.age }}</p>
-            <p>Sex: {{ dog.get_sex_display }}</p>
-            <p>Description: {{ dog.description }}</p>
-            <p>Adoption Status: {{ dog.is_not_adopted|yesno:"Available,Adopted" }}</p>
-            {% if dog.owner %}
-            <p>Owner: {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
-            {% endif %}
-            {% if dog.shelter %}
-            <p>Shelter: {{ dog.shelter.name }}</p>
-            {% endif %}
-            <p>Weight: {{ dog.weight }}</p>
-            <p>Height: {{ dog.height }}</p>
-            <p>Color: {{ dog.color }}</p>
-            <p>Eye Color: {{ dog.eye_color }}</p>
-            <p>Last Known Location: {{ dog.last_known_location }}</p>
+        <div class="column">
+            <h1 class="title is-2">{{ dog.name }}</h1>
+            <div class="content">
+                <p><strong>Breed:</strong> {{ dog.breed }}</p>
+                <p><strong>Age:</strong> {{ dog.age }}</p>
+                <p><strong>Sex:</strong> {{ dog.get_sex_display }}</p>
+                <p><strong>Description:</strong> {{ dog.description }}</p>
+                <p><strong>Adoption Status:</strong> {{ dog.is_not_adopted|yesno:"Available,Adopted" }}</p>
+                {% if dog.owner %}
+                <p><strong>Owner:</strong> {{ dog.owner.first_name }} {{ dog.owner.last_name }}</p>
+                {% endif %}
+                {% if dog.shelter %}
+                <p><strong>Shelter:</strong> {{ dog.shelter.name }}</p>
+                {% endif %}
+                <p><strong>Weight:</strong> {{ dog.weight }}</p>
+                <p><strong>Height:</strong> {{ dog.height }}</p>
+                <p><strong>Color:</strong> {{ dog.color }}</p>
+                <p><strong>Eye Color:</strong> {{ dog.eye_color }}</p>
+                <p><strong>Last Known Location:</strong> {{ dog.last_known_location }}</p>
+            </div>
         </div>
-
     </div>
 
     <!-- Add more detailed fields if necessary -->
 
-    <a href="{% url 'update_dog' dog.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'delete_dog' dog.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this dog?');">Delete</a>
+    <div class="buttons mt-4">
+        <a href="{% url 'update_dog' dog.id %}" class="button is-primary">Edit</a>
+        <a href="{% url 'delete_dog' dog.id %}" class="button is-danger" onclick="return confirm('Are you sure you want to delete this dog?');">Delete</a>
+    </div>
 </div>
-
 {% endblock %}

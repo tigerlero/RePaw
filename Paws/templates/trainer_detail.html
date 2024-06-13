@@ -4,19 +4,40 @@
 {% block title %}{{ trainer.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ trainer.name }}</h1>
-    {% if trainer.profile_image %}
-    <img src="{{ trainer.profile_image.url }}" class="img-fluid mb-3" alt="{{ trainer.name }}">
-    {% else %}
-    <img src="{% static 'images/default.jpg' %}" class="img-fluid mb-3" alt="Default trainer Image">
-    {% endif %}
-    <p><strong>Email:</strong> {{ trainer.email }}</p>
-    <p><strong>Phone Number:</strong> {{ trainer.phone_number }}</p>
-    <p><strong>Experience Years:</strong> {{ trainer.experience_years }}</p>
-    <p><strong>Specialties:</strong> {{ trainer.specialties }}</p>
-    <a href="{% url 'trainers_list' %}" class="btn btn-secondary">Back to Trainers</a>
-    <a href="{% url 'update_trainer' trainer.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'delete_trainer' trainer.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter">
+                <div class="card">
+                    {% if trainer.profile_image %}
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ trainer.profile_image.url }}" alt="{{ trainer.name }}">
+                        </figure>
+                    </div>
+                    {% else %}
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default trainer Image">
+                        </figure>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-content">
+                        <h1 class="title">{{ trainer.userprofile.first_name }} {{ trainer.userprofile.last_name }}</h1>
+                        <p><strong>Email:</strong> {{ trainer.userprofile.email }}</p>
+                        <p><strong>Phone Number:</strong> {{ trainer.userprofile.phone_number }}</p>
+                        <p><strong>Experience Years:</strong> {{ trainer.experience_years }}</p>
+                        <p><strong>Specialties:</strong> {{ trainer.specialties }}</p>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="{% url 'trainers_list' %}" class="card-footer-item button is-secondary">Back to Trainers</a>
+                        <a href="{% url 'update_trainer' trainer.id %}" class="card-footer-item button is-primary">Edit</a>
+                        <a href="{% url 'delete_trainer' trainer.id %}" class="card-footer-item button is-danger">Delete</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

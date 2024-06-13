@@ -4,11 +4,261 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4">Adoption Form</h2>
+    <h2 class="title is-4 mb-4">Adoption Form</h2>
     <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    {{ form.name.label_tag }}
+                    <div class="control">
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.birth_date.label_tag }}
+                    <div class="control">
+                        {{ form.birth_date }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.email.label_tag }}
+                    <div class="control">
+                        {{ form.email }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.address.label_tag }}
+                    <div class="control">
+                        {{ form.address }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.city.label_tag }}
+                    <div class="control">
+                        {{ form.city }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.postal_code.label_tag }}
+                    <div class="control">
+                        {{ form.postal_code }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.home_phone.label_tag }}
+                    <div class="control">
+                        {{ form.home_phone }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.work_phone.label_tag }}
+                    <div class="control">
+                        {{ form.work_phone }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.mobile_phone.label_tag }}
+                    <div class="control">
+                        {{ form.mobile_phone }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.facebook_profile.label_tag }}
+                    <div class="control">
+                        {{ form.facebook_profile }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.instagram_profile.label_tag }}
+                    <div class="control">
+                        {{ form.instagram_profile }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.adults_in_home.label_tag }}
+                    <div class="control">
+                        {{ form.adults_in_home }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.children_info.label_tag }}
+                    <div class="control">
+                        {{ form.children_info }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.allergies.label_tag }}
+                    <div class="control">
+                        {{ form.allergies }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.walk_time.label_tag }}
+                    <div class="control">
+                        {{ form.walk_time }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.alone_time.label_tag }}
+                    <div class="control">
+                        {{ form.alone_time }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="column">
+                <div class="field">
+                    {{ form.moving_plan.label_tag }}
+                    <div class="control">
+                        {{ form.moving_plan }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.home_type.label_tag }}
+                    <div class="control">
+                        <div class="select">
+                        {{ form.home_type }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.fence_height.label_tag }}
+                    <div class="control">
+                        {{ form.fence_height }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.escape_possibility.label_tag }}
+                    <div class="control">
+                        {{ form.escape_possibility }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.current_pets.label_tag }}
+                    <div class="control">
+                        {{ form.current_pets }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.past_pets.label_tag }}
+                    <div class="control">
+                        {{ form.past_pets }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.abandoned_pet.label_tag }}
+                    <div class="control">
+                        {{ form.abandoned_pet }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.adopted_before.label_tag }}
+                    <div class="control">
+                        {{ form.adopted_before }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.adoption_reason.label_tag }}
+                    <div class="control">
+                        {{ form.adoption_reason }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.family_agreement.label_tag }}
+                    <div class="control">
+                        {{ form.family_agreement }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.caretaker_info.label_tag }}
+                    <div class="control">
+                        {{ form.caretaker_info }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.plan_to_neuter.label_tag }}
+                    <div class="control">
+                        {{ form.plan_to_neuter }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.if_not_neuter_reason.label_tag }}
+                    <div class="control">
+                        {{ form.if_not_neuter_reason }}
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+
+                <div class="field">
+                    {{ form.pet_location_day_home.label_tag }}
+                    <div class="control">
+                        {{ form.pet_location_day_home }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.pet_location_day_away.label_tag }}
+                    <div class="control">
+                        {{ form.pet_location_day_away }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.pet_location_night.label_tag }}
+                    <div class="control">
+                        {{ form.pet_location_night }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.pet_location_long_absence.label_tag }}
+                    <div class="control">
+                        {{ form.pet_location_long_absence }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    {{ form.bad_behavior_response.label_tag }}
+                    <div class="control">
+                        {{ form.bad_behavior_response }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.preferences.label_tag }}
+                    <div class="control">
+                        {{ form.preferences }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.pet_character.label_tag }}
+                    <div class="control">
+                        {{ form.pet_character }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.willing_to_host_special_needs.label_tag }}
+                    <div class="control">
+                        {{ form.willing_to_host_special_needs }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.additional_info.label_tag }}
+                    <div class="control">
+                        {{ form.additional_info }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form.accepted_terms.label_tag }}
+                    <div class="control">
+                        {{ form.accepted_terms }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Submit</button>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

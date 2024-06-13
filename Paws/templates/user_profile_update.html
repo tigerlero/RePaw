@@ -5,10 +5,91 @@
 {% block content %}
 <div class="container">
     <h1>Update User Profile</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
+        <div class="field">
+            <label for="id_first_name" class="label request-heading">First Name</label>
+            <div class="control">
+                <input type="text" id="id_first_name" name="first_name" class="input" value="{{ form.first_name.value }}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="id_last_name" class="label request-heading">Last Name</label>
+            <div class="control">
+                <input type="text" id="id_last_name" name="last_name" class="input" value="{{ form.last_name.value }}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="id_email" class="label request-heading">Email</label>
+            <div class="control">
+                <input type="email" id="id_email" name="email" class="input" value="{{ form.email.value }}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="id_phone_number" class="label request-heading">Phone Number</label>
+            <div class="control">
+                <input type="text" id="id_phone_number" name="phone_number" class="input" placeholder="+306981234567" value="{{ form.phone_number.value }}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="id_profile_image" class="label request-heading">Profile Image</label>
+            <div class="control">
+                <input type="file" id="id_profile_image" name="profile_image" class="input-file">
+            </div>
+        </div>
+        <div class="field">
+            <label for="id_city" class="label request-heading">City</label>
+            <div class="control">
+                <input type="text" id="id_city" name="city" class="input" value="{{ form.city.value }}">
+            </div>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_shelter" id="is_shelter">
+                <span class="checkbox-label">Shelter</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_owner" id="is_owner">
+                <span class="checkbox-label">Owner</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_doctor" id="is_doctor">
+                <span class="checkbox-label">Doctor</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_walker" id="is_walker">
+                <span class="checkbox-label">Walker</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_sitter" id="is_sitter">
+                <span class="checkbox-label">Sitter</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_groomer" id="is_groomer">
+                <span class="checkbox-label">Groomer</span>
+            </label>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_trainer" id="is_trainer">
+                <span class="checkbox-label">Trainer</span>
+            </label>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Update</button>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

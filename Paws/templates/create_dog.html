@@ -1,14 +1,167 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Add a New Dog{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Add a New Dog</h1>
-    <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-</div>
+<section class="section">
+    <div class="container-fluidn">
+        <h1 class="title">Add a New Dog</h1>
+        <form method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
+            {% csrf_token %}
+            <div class="columns is-multiline">
+                <div class="column is-half">
+                    <div class="columns is-multiline">
+                        <div class="column is-third">
+                            <div class="field">
+                                <label class="label">{{ form.name.label }}</label>
+                                <div class="control">
+                                    {{ form.name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-fifth">
+                            <div class="field">
+                                <label class="label">{{ form.age.label }}</label>
+                                <div class="control">
+                                    {{ form.age }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="field">
+                            <label class="label">{{ form.breed.label }}</label>
+                            <div class="control">
+                                {{ form.breed }}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-one-third">
+                            <div class="field">
+                                <label class="label">{{ form.sex.label }}</label>
+                                <div class="control">
+                                    <div class="select">
+                                        {{ form.sex }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="field">
+                                <label class="label">{{ form.owner.label }}</label>
+                                <div class="control">
+                                    <div class="select">
+                                        {{ form.owner }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="field">
+                                <label class="label">{{ form.shelter.label }}</label>
+                                <div class="control">
+                                    <div class="select">
+                                        {{ form.shelter }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ form.description.label }}</label>
+                        <div class="control">
+                            {{ form.description }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="checkbox">
+                            {{ form.is_not_adopted }} {{ form.is_not_adopted.label }}
+                        </label>
+                    </div>
+                </div>
+                <div class="column is-half">
+
+                    <div class="columns is-multiline">
+                        <div class="column is-half">
+                            <div class="field">
+                                <label class="label">{{ form.weight.label }}</label>
+                                <div class="control">
+                                    {{ form.weight }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-half">
+                            <div class="field">
+                                <label class="label">{{ form.height.label }}</label>
+                                <div class="control">
+                                    {{ form.height }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-half">
+                            <div class="field">
+                                <label class="label">{{ form.color.label }}</label>
+                                <div class="control">
+                                    {{ form.color }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-half">
+                            <div class="field">
+                                <label class="label">{{ form.eye_color.label }}</label>
+                                <div class="control">
+                                    {{ form.eye_color }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline">
+                        <div class="column is-half">
+                            <div class="field">
+                                <label class="label">{{ form.last_known_location.label }}</label>
+                                <div class="control">
+                                    {{ form.last_known_location }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-half">
+                    <div class="field">
+                        <label class="label">{{ form.image.label }}</label>
+                        <div class="control">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    {{ form.image }}
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                                    <span class="file-name">
+                                        No file selected
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}

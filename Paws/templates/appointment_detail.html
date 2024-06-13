@@ -3,12 +3,18 @@
 {% block title %}Appointment{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Appointment Details</h1>
-    <p><strong>Dog:</strong> {{ appointment.dog.name }}</p>
-    <!-- Display other fields as needed -->
-    <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Back to Appointments</a>
-    <a href="{% url 'appointment_update' appointment.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'appointment_delete' appointment.id %}" class="btn btn-danger">Delete</a>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Appointment Details</h1>
+        <div class="box">
+            <p><strong>Dog:</strong> {{ appointment.dog.name }}</p>
+            <!-- Display other fields as needed -->
+        </div>
+        <div class="buttons">
+            <a href="{% url 'appointment_list' %}" class="button is-secondary">Back to Appointments</a>
+            <a href="{% url 'appointment_update' appointment.id %}" class="button is-warning">Update</a>
+            <a href="{% url 'appointment_delete' appointment.id %}" class="button is-danger">Delete</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

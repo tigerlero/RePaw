@@ -7,9 +7,20 @@
     <h1>Events</h1>
     <ul class="list-group">
         {% for event in events %}
-            <li class="list-group-item">
-                <a href="{% url 'event_detail' event.id %}">{{ event.name }}</a> - {{ event.date }}
-            </li>
+        <li class="list-group-item">
+            <div class="level">
+                <div class="level-left">
+                    <div>
+                        <a href="{% url 'event_detail' event.id %}">{{ event.name }}</a>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div>
+                        <span class="tag">{{ event.date }}</span>
+                    </div>
+                </div>
+            </div>
+        </li>
         {% endfor %}
     </ul>
 </div>
