@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Owner, Shelter, Doctor, Appointment, \
-    VaccinationRecord, Event, Microchip, DogBreedPrediction, UserProfile, Grooming, Adoption, Groomer, Walker, Sitter
+    VaccinationRecord, Event, Microchip, DogBreedPrediction, UserProfile, Grooming, Adoption, Groomer, Walker, Sitter, \
+    Service, Availability, Booking
 
 admin.site.register(Dog)
 admin.site.register(Walk)
@@ -23,3 +24,21 @@ admin.site.register(Adoption)
 admin.site.register(Groomer)
 admin.site.register(Sitter)
 admin.site.register(Walker)
+admin.site.register(Service)
+admin.site.register(Availability)
+admin.site.register(Booking)
+
+# @admin.register(Service)
+# class ServiceAdmin(admin.ModelAdmin):
+#     list_display = ('service_type', 'description', 'price_per_hour')
+#     list_filter = ('service_type',)
+#
+# @admin.register(Availability)
+# class AvailabilityAdmin(admin.ModelAdmin):
+#     list_display = ('service', 'date', 'start_time', 'end_time')
+#     list_filter = ('service', 'date')
+#
+# @admin.register(Booking)
+# class BookingAdmin(admin.ModelAdmin):
+#     list_display = ('user', 'service', 'date', 'start_time', 'end_time', 'status')
+#     list_filter = ('service', 'date', 'status')

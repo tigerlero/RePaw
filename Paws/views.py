@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 # Create your views here.
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -16,14 +16,30 @@ from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, Sh
     WalkerBookingForm, SitterBookingForm, GroomerBookingForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
     Adoption, Grooming, Groomer, Walker, Sitter, Testimonial, Resource, Trainer, DoctorBooking, TrainerBooking, \
-    WalkerBooking, SitterBooking, GroomerBooking
+    WalkerBooking, SitterBooking, GroomerBooking, Service, Availability, Booking
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
-    AdoptionSerializer, GroomingSerializer, GroomerSerializer, TrainerSerializer
+    AdoptionSerializer, GroomingSerializer, GroomerSerializer, TrainerSerializer, ServiceSerializer, \
+    AvailabilitySerializer, BookingSerializer
 
 from .models import Owner, Shelter, Doctor, Appointment, VaccinationRecord, Event
 from .serializers import OwnerSerializer, ShelterSerializer, DoctorSerializer, AppointmentSerializer, \
     VaccinationRecordSerializer, EventSerializer
+
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+
+class AvailabilityViewSet(viewsets.ModelViewSet):
+    queryset = Availability.objects.all()
+    serializer_class = AvailabilitySerializer
+
+
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
 
 
 class OwnerViewSet(viewsets.ModelViewSet):

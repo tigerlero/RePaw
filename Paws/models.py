@@ -22,8 +22,8 @@ class Breed(models.Model):
     trainability = models.CharField(max_length=100, blank=True, null=True)
     health_issues = models.TextField(blank=True, null=True)
     special_needs = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='breed_images/', default='breed_images/default.jpg', null=True, blank=True)  # Specify default image path
-
+    image = models.ImageField(upload_to='breed_images/', default='breed_images/default.jpg', null=True,
+                              blank=True)  # Specify default image path
 
     def __str__(self):
         return self.name
@@ -230,7 +230,8 @@ class Dog(models.Model):
     color = models.CharField(max_length=100, null=True, blank=True)
     eye_color = models.CharField(max_length=50, null=True, blank=True)
     last_known_location = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(upload_to='dog_images/', default='breed_images/default.jpg', null=True, blank=True)  # Specify default image path
+    image = models.ImageField(upload_to='dog_images/', default='breed_images/default.jpg', null=True,
+                              blank=True)  # Specify default image path
 
     def __str__(self):
         return self.name
@@ -419,3 +420,48 @@ class GroomerBooking(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.groomer} - {self.date}'
+
+
+class Service(models.Model):
+    SERVICE_TYPES = [
+        ('trainer', 'Trainer'),
+        ('walker', 'Walker'),
+        ('sitter', 'Sitter'),
+        ('groomer', 'Groomer'),
+        ('doctor', 'Doctor'),  # Added doctor service type
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    service_type = models.CharField(max_length=20, choices=SERVICE_TYPES)
+    description = models.TextField()
+    price_per_hour = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_service_type_display()}"
+
+
+class Availability(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.service} from {self.start_time} to {self.end_time}"
+
+
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('canceled', 'Canceled'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+
+    def __str__(self):
+        return f"Booking by {self.user} for {self.service} on {self.date} from {self.start_time} to {self.end_time}"

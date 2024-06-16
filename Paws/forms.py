@@ -211,7 +211,6 @@ class AdoptionForm(forms.ModelForm):
     #         field.widget.attrs['class'] = 'form-control'
 
 
-
 class DoctorBookingForm(forms.ModelForm):
     class Meta:
         model = DoctorBooking

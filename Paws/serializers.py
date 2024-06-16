@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
-    Adoption, Groomer, Grooming, Trainer, Sitter, Walker
+    Adoption, Groomer, Grooming, Trainer, Sitter, Walker, Service, Availability, Booking
 from .models import Owner, Shelter, Doctor, Appointment, VaccinationRecord, Event
 
 
@@ -142,4 +142,22 @@ class WalkerSerializer(serializers.ModelSerializer):
 class SitterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sitter
+        fields = '__all__'
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+
+class AvailabilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Availability
+        fields = '__all__'
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
         fields = '__all__'

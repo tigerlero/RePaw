@@ -22,7 +22,7 @@ from .views import DogViewSet, WalkViewSet, BreedViewSet, TrainingViewSet, Healt
     doctor_booking_delete, trainer_booking_list, trainer_booking_create, trainer_booking_update, trainer_booking_delete, \
     walker_booking_list, walker_booking_create, walker_booking_update, walker_booking_delete, sitter_booking_list, \
     sitter_booking_create, sitter_booking_update, sitter_booking_delete, groomer_booking_list, groomer_booking_create, \
-    groomer_booking_update, groomer_booking_delete
+    groomer_booking_update, groomer_booking_delete, ServiceViewSet, AvailabilityViewSet, BookingViewSet
 from .views import OwnerViewSet, ShelterViewSet, DoctorViewSet, AppointmentViewSet, VaccinationRecordViewSet, EventViewSet
 from django.views.generic import TemplateView
 
@@ -43,9 +43,13 @@ router.register(r'events', EventViewSet)
 router.register(r'microchips', MicrochipViewSet)
 router.register(r'predictions', DogBreedPredictionViewSet)
 router.register(r'userprofiles', UserProfileViewSet)
+router.register(r'services', ServiceViewSet)
+router.register(r'availabilities', AvailabilityViewSet)
+router.register(r'bookings', BookingViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),  # This line adds authentication URLs
 
     path('', home, name='home'),
 

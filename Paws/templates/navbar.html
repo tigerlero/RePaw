@@ -20,22 +20,26 @@
                         <span class="icon">
                             <i class="fas fa-user-circle"></i>
                         </span>
+                        <span>Profile</span>
                     </a>
                     <a class="navbar-item" href="{% url 'logout' %}" title="Logout">
                         <span class="icon">
                             <i class="fas fa-sign-out-alt"></i>
                         </span>
+                        <span>Logout</span>
                     </a>
                 {% else %}
                     <a class="navbar-item" href="{% url 'register' %}" title="Register">
                         <span class="icon">
                             <i class="fas fa-user-plus"></i>
                         </span>
+                        <span>Register</span>
                     </a>
                     <a class="navbar-item" href="{% url 'login' %}" title="Login">
                         <span class="icon">
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
+                        <span>Login</span>
                     </a>
                 {% endif %}
             </div>
