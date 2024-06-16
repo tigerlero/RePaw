@@ -4,36 +4,68 @@
 
 {% block content %}
 <section class="section">
-    <div class="container">
-        <h1 class="title">Groomers List</h1>
-        <div class="columns is-multiline">
-            {% for groomer in groomers %}
-            <div class="column is-4">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                            {% if groomer.profile_image %}
-                            <img src="{{ groomer.profile_image.url }}" alt="{{ groomer.first_name }} {{ groomer.last_name }}">
-                            {% else %}
-                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
-                            {% endif %}
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title is-4">{{ groomer.first_name }} {{ groomer.last_name }}</p>
-                                <p class="subtitle is-6">{{ groomer.email }}</p>
-                            </div>
+    <div class="container is-relative">
+<!--        <div class="iframe-container">-->
+<!--            <iframe style="position: relative; left: -200px; right: -200px" src="https://rive.app/s/OMY06Bz6Dk6OVULsb6BxPg/embed" title="Project Embed Content" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms" loading="lazy" fetchpriority="auto"></iframe>-->
+<!--        </div>-->
+        <div class="content-on-top">
+            <h1 class="title">Groomers List</h1>
+            <div class="columns is-multiline">
+                {% for groomer in groomers %}
+                <div class="column is-4">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                {% if groomer.profile_image %}
+                                <img src="{{ groomer.profile_image.url }}" alt="{{ groomer.first_name }} {{ groomer.last_name }}">
+                                {% else %}
+                                <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image">
+                                {% endif %}
+                            </figure>
                         </div>
-                        <div class="content">
-                            <p>{{ groomer.phone_number }}</p>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">{{ groomer.first_name }} {{ groomer.last_name }}</p>
+                                    <p class="subtitle is-6">{{ groomer.email }}</p>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <p>{{ groomer.phone_number }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </section>
 {% endblock %}
+
+<style>
+.iframe-container {
+    padding-top:280px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.embed-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% + 100px); /* Adjust width to counter padding */
+    height: calc(100% + 150px); /* Adjust height to counter padding */
+}
+
+.content-on-top {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Optional: Add a background color with some opacity to make the text more readable */
+    margin: 50px 50px 0 50px; /* Adjust the margin to align with iframe cropping */
+}
+</style>

@@ -5,6 +5,9 @@
 
 {% block content %}
 <div class="container">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+    <dotlottie-player src="https://lottie.host/e8032d85-9417-4c3b-9a7a-e4deea4a35f2/re0Tm52HVj.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
     <h1 class="title my-4">Walkers List</h1>
     <div class="columns is-multiline">
         {% for walker in walkers %}
