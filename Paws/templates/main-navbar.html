@@ -1,52 +1,72 @@
 <div class="navbar-end">
-                <a class="navbar-item" href="{% url 'dogs_list' %}" title="Dogs">
-                    <span class="icon">
-                        <i class="fas fa-dog"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'breeds_list' %}" title="Breeds">
-                    <span class="icon">
-                        <i class="fas fa-dna"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'doctors_list' %}" title="Doctors">
-                    <span class="icon">
-                        <i class="fas fa-user-md"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'walkers_list' %}" title="Walkers">
-                    <span class="icon">
-                        <i class="fas fa-walking"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'sitters_list' %}" title="Sitters">
-                    <span class="icon">
-                        <i class="fa-solid fa-house-chimney-user"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'groomers_list' %}" title="Groomers">
-                    <span class="icon">
-                        <i class="fas fa-cut"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'trainers_list' %}" title="Trainers">
-                    <span class="icon">
-                        <i class="fas fa-user-tie"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'shelters_list' %}" title="Shelters">
-                    <span class="icon">
-                        <i class="fas fa-home"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'events_list' %}" title="Events">
-                    <span class="icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </span>
-                </a>
-                <a class="navbar-item" href="{% url 'friendlyspots_list' %}" title="Friendly Spots">
-                    <span class="icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </span>
-                </a>
-            </div>
+    <a class="navbar-item" href="{% url 'dogs_list' %}" title="Dogs">
+        <span class="icon">
+            <i class="fas fa-dog"></i>
+        </span>
+        <span>Dogs</span>
+    </a>
+    <a class="navbar-item" href="{% url 'breeds_list' %}" title="Breeds">
+        <span class="icon">
+            <i class="fas fa-dna"></i>
+        </span>
+        <span>Breeds</span>
+    </a>
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+            <span class="icon">
+                <i class="fas fa-concierge-bell"></i>
+            </span>
+            <span>Services</span>
+        </a>
+        <div class="navbar-dropdown">
+            <a class="navbar-item" href="{% url 'doctors_list' %}" title="Doctors">
+                <span class="icon">
+                    <i class="fas fa-user-md"></i>
+                </span>
+                <span>Doctors</span>
+            </a>
+            <a class="navbar-item" href="{% url 'trainers_list' %}" title="Trainers">
+                <span class="icon">
+                    <i class="fas fa-user-tie"></i>
+                </span>
+                <span>Trainers</span>
+            </a>
+            <a class="navbar-item" href="{% url 'walkers_list' %}" title="Walkers">
+                <span class="icon">
+                    <i class="fas fa-walking"></i>
+                </span>
+                <span>Walkers</span>
+            </a>
+            <a class="navbar-item" href="{% url 'sitters_list' %}" title="Sitters">
+                <span class="icon">
+                    <i class="fa-solid fa-house-chimney-user"></i>
+                </span>
+                <span>Sitters</span>
+            </a>
+            <a class="navbar-item" href="{% url 'groomers_list' %}" title="Groomers">
+                <span class="icon">
+                    <i class="fas fa-cut"></i>
+                </span>
+                <span>Groomers</span>
+            </a>
+        </div>
+    </div>
+    <a class="navbar-item" href="{% url 'shelters_list' %}" title="Shelters">
+        <span class="icon">
+            <i class="fas fa-home"></i>
+        </span>
+        <span>Shelters</span>
+    </a>
+    <a class="navbar-item" href="{% url 'events_list' %}" title="Events">
+        <span class="icon">
+            <i class="fas fa-calendar-alt"></i>
+        </span>
+        <span>Events</span>
+    </a>
+    <a class="navbar-item" href="{% url 'friendlyspots_list' %}" title="Friendly Spots">
+        <span class="icon">
+            <i class="fas fa-map-marker-alt"></i>
+        </span>
+        <span>Friendly Spots</span>
+    </a>
+</div>

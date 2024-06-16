@@ -364,3 +364,58 @@ class Trainer(models.Model):
 
     def __str__(self):
         return self.experience_years
+
+
+class DoctorBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.doctor} - {self.date}'
+
+
+class TrainerBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.trainer} - {self.date}'
+
+
+class WalkerBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    walker = models.ForeignKey(Walker, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.walker} - {self.date}'
+
+
+class SitterBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.sitter} - {self.date}'
+
+
+class GroomerBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    groomer = models.ForeignKey(Groomer, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.groomer} - {self.date}'

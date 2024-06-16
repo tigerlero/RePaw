@@ -1,0 +1,16 @@
+<!-- templates/bookings/groomer_booking_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Groomer Bookings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Groomer Bookings</h1>
+    <a href="{% url 'groomer_booking_create' %}" class="button is-primary">Book Groomer</a>
+    <ul>
+        {% for booking in bookings %}
+        <li>{{ booking.date }} - {{ booking.groomer }} - <a href="{% url 'groomer_booking_update' booking.id %}">Edit</a> | <a href="{% url 'groomer_booking_delete' booking.id %}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

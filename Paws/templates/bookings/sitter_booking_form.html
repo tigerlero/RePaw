@@ -1,0 +1,15 @@
+<!-- templates/bookings/sitter_booking_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}Book Sitter{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Book Sitter</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button is-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

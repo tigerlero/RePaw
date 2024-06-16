@@ -36,15 +36,22 @@
                     </p>
                 {% endif %}
             </div>
-            <div class="buttons mt-3">
-                <!-- Adoption button if the dog is available for adoption -->
+            <div class="content">
+                <a href="{% url 'dog_detail' dog.id %}" class="button is-primary">
+                    <span class="icon"><i class="fas fa-eye"></i></span>
+                </a>
                 {% if dog.is_not_adopted %}
-                    <a href="{% url 'adoption_form' %}" class="button is-success mr-2"><i class="fas fa-paw"></i> Adopt</a>
+                <a href="{% url 'adoption_form' %}" class="button is-success">
+                    <span class="icon"><i class="fas fa-paw"></i></span>
+                    <span>Adopt</span>
+                </a>
                 {% endif %}
-                <!-- Donate button -->
-                <a href="https://donate.stripe.com/4gw6oq7Fz3Ko59ufYZc" class="button is-info"><i class="fas fa-donate"></i></a>
-                <!-- Walk button -->
-<!--                <a href="#" class="button is-info"><i class="fas fa-walking"></i></a>-->
+                <a href="#" class="button is-info">
+                    <span class="icon"><i class="fas fa-donate"></i></span>
+                </a>
+                <a href="#" class="button is-warning">
+                    <span class="icon"><i class="fas fa-walking"></i></span>
+                </a>
             </div>
         </div>
     </div>

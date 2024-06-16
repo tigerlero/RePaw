@@ -12,9 +12,11 @@ from rest_framework.response import Response
 
 from .forms import DogForm, BreedForm, FoodForm, FriendlySpotForm, OwnerForm, ShelterForm, DoctorForm, EventForm, \
     MicrochipForm, WalkForm, TrainingForm, HealthForm, AppointmentForm, VaccinationRecordForm, DogBreedPredictionForm, \
-    UserProfileForm, GroomingForm, AdoptionForm, RegisterForm, TrainerForm
+    UserProfileForm, GroomingForm, AdoptionForm, RegisterForm, TrainerForm, DoctorBookingForm, TrainerBookingForm, \
+    WalkerBookingForm, SitterBookingForm, GroomerBookingForm
 from .models import Dog, Walk, Breed, Training, Health, Food, FriendlySpot, Microchip, DogBreedPrediction, UserProfile, \
-    Adoption, Grooming, Groomer, Walker, Sitter, Testimonial, Resource, Trainer
+    Adoption, Grooming, Groomer, Walker, Sitter, Testimonial, Resource, Trainer, DoctorBooking, TrainerBooking, \
+    WalkerBooking, SitterBooking, GroomerBooking
 from .serializers import DogSerializer, WalkSerializer, BreedSerializer, TrainingSerializer, HealthSerializer, \
     FoodSerializer, FriendlySpotSerializer, MicrochipSerializer, DogBreedPredictionSerializer, UserProfileSerializer, \
     AdoptionSerializer, GroomingSerializer, GroomerSerializer, TrainerSerializer
@@ -108,6 +110,7 @@ class TrainerListCreateAPIView(generics.ListCreateAPIView):
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
 
+
 class TrainerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
@@ -188,7 +191,7 @@ def dogs_list(request):
 
 def create_dog(request):
     if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES,)
+        form = DogForm(request.POST, request.FILES, )
         if form.is_valid():
             form.save()
             return redirect(reverse('dogs_list'))
@@ -738,7 +741,7 @@ def adoptionSuccess(request):
 
 def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST, request.FILES,)
+        form = RegisterForm(request.POST, request.FILES, )
         if form.is_valid():
             user = form.save()
 
@@ -874,6 +877,196 @@ def delete_trainer(request, trainer_id):
         trainer.delete()
         return redirect('trainers_list')
     return render(request, 'delete_trainer.html', {'trainer': trainer})
+
+
+def doctor_booking_list(request):
+    bookings = DoctorBooking.objects.filter(user=request.user)
+    return render(request, 'bookings/doctor_booking_list.html', {'bookings': bookings})
+
+
+def doctor_booking_create(request):
+    if request.method == 'POST':
+        form = DoctorBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            return redirect('doctor_booking_list')
+    else:
+        form = DoctorBookingForm()
+    return render(request, 'bookings/doctor_booking_form.html', {'form': form})
+
+
+def doctor_booking_update(request, pk):
+    booking = DoctorBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = DoctorBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('doctor_booking_list')
+    else:
+        form = DoctorBookingForm(instance=booking)
+    return render(request, 'bookings/doctor_booking_form.html', {'form': form})
+
+
+def doctor_booking_delete(request, pk):
+    booking = DoctorBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('doctor_booking_list')
+    return render(request, 'bookings/doctor_booking_confirm_delete.html', {'booking': booking})
+
+
+def trainer_booking_list(request):
+    bookings = TrainerBooking.objects.filter(user=request.user)
+    return render(request, 'bookings/trainer_booking_list.html', {'bookings': bookings})
+
+
+def trainer_booking_create(request):
+    if request.method == 'POST':
+        form = TrainerBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            return redirect('trainer_booking_list')
+    else:
+        form = TrainerBookingForm()
+    return render(request, 'bookings/trainer_booking_form.html', {'form': form})
+
+
+def trainer_booking_update(request, pk):
+    booking = TrainerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = TrainerBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('trainer_booking_list')
+    else:
+        form = TrainerBookingForm(instance=booking)
+    return render(request, 'bookings/trainer_booking_form.html', {'form': form})
+
+
+def trainer_booking_delete(request, pk):
+    booking = TrainerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('trainer_booking_list')
+    return render(request, 'bookings/trainer_booking_confirm_delete.html', {'booking': booking})
+
+
+def walker_booking_list(request):
+    bookings = WalkerBooking.objects.filter(user=request.user)
+    return render(request, 'bookings/walker_booking_list.html', {'bookings': bookings})
+
+
+def walker_booking_create(request):
+    if request.method == 'POST':
+        form = WalkerBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            return redirect('walker_booking_list')
+    else:
+        form = WalkerBookingForm()
+    return render(request, 'bookings/walker_booking_form.html', {'form': form})
+
+
+def walker_booking_update(request, pk):
+    booking = WalkerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = WalkerBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('walker_booking_list')
+    else:
+        form = WalkerBookingForm(instance=booking)
+    return render(request, 'bookings/walker_booking_form.html', {'form': form})
+
+
+def walker_booking_delete(request, pk):
+    booking = WalkerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('walker_booking_list')
+    return render(request, 'bookings/walker_booking_confirm_delete.html', {'booking': booking})
+
+
+def sitter_booking_list(request):
+    bookings = SitterBooking.objects.filter(user=request.user)
+    return render(request, 'bookings/sitter_booking_list.html', {'bookings': bookings})
+
+
+def sitter_booking_create(request):
+    if request.method == 'POST':
+        form = SitterBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            return redirect('sitter_booking_list')
+    else:
+        form = SitterBookingForm()
+    return render(request, 'bookings/sitter_booking_form.html', {'form': form})
+
+
+def sitter_booking_update(request, pk):
+    booking = SitterBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = SitterBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('sitter_booking_list')
+    else:
+        form = SitterBookingForm(instance=booking)
+    return render(request, 'bookings/sitter_booking_form.html', {'form': form})
+
+
+def sitter_booking_delete(request, pk):
+    booking = SitterBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('sitter_booking_list')
+    return render(request, 'bookings/sitter_booking_confirm_delete.html', {'booking': booking})
+
+
+def groomer_booking_list(request):
+    bookings = GroomerBooking.objects.filter(user=request.user)
+    return render(request, 'bookings/groomer_booking_list.html', {'bookings': bookings})
+
+
+def groomer_booking_create(request):
+    if request.method == 'POST':
+        form = GroomerBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            return redirect('groomer_booking_list')
+    else:
+        form = GroomerBookingForm()
+    return render(request, 'bookings/groomer_booking_form.html', {'form': form})
+
+
+def groomer_booking_update(request, pk):
+    booking = GroomerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = GroomerBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('groomer_booking_list')
+    else:
+        form = GroomerBookingForm(instance=booking)
+    return render(request, 'bookings/groomer_booking_form.html', {'form': form})
+
+
+def groomer_booking_delete(request, pk):
+    booking = GroomerBooking.objects.get(pk=pk, user=request.user)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('groomer_booking_list')
+    return render(request, 'bookings/groomer_booking_confirm_delete.html', {'booking': booking})
 
 
 def create_breeds():

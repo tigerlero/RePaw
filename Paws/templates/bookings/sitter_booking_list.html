@@ -1,0 +1,16 @@
+<!-- templates/bookings/sitter_booking_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Sitter Bookings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Sitter Bookings</h1>
+    <a href="{% url 'sitter_booking_create' %}" class="button is-primary">Book Sitter</a>
+    <ul>
+        {% for booking in bookings %}
+        <li>{{ booking.date }} - {{ booking.sitter }} - <a href="{% url 'sitter_booking_update' booking.id %}">Edit</a> | <a href="{% url 'sitter_booking_delete' booking.id %}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

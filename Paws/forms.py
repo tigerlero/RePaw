@@ -3,7 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from .models import Dog, Breed, Food, FriendlySpot, Owner, Shelter, Doctor, Event, Microchip, Walk, Training, Health, \
-    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption, UserProfile, Trainer
+    Appointment, VaccinationRecord, DogBreedPrediction, Grooming, Adoption, UserProfile, Trainer, DoctorBooking, \
+    TrainerBooking, WalkerBooking, SitterBooking, GroomerBooking
 
 
 class DogForm(forms.ModelForm):
@@ -208,3 +209,34 @@ class AdoptionForm(forms.ModelForm):
     #     super(AdoptionForm, self).__init__(*args, **kwargs)
     #     for field_name, field in self.fields.items():
     #         field.widget.attrs['class'] = 'form-control'
+
+
+
+class DoctorBookingForm(forms.ModelForm):
+    class Meta:
+        model = DoctorBooking
+        fields = ['doctor', 'date', 'reason']
+
+
+class TrainerBookingForm(forms.ModelForm):
+    class Meta:
+        model = TrainerBooking
+        fields = ['trainer', 'date', 'reason']
+
+
+class WalkerBookingForm(forms.ModelForm):
+    class Meta:
+        model = WalkerBooking
+        fields = ['walker', 'date', 'reason']
+
+
+class SitterBookingForm(forms.ModelForm):
+    class Meta:
+        model = SitterBooking
+        fields = ['sitter', 'date', 'reason']
+
+
+class GroomerBookingForm(forms.ModelForm):
+    class Meta:
+        model = GroomerBooking
+        fields = ['groomer', 'date', 'reason']

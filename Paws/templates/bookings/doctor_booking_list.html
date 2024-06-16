@@ -1,0 +1,16 @@
+<!-- templates/bookings/doctor_booking_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Doctor Bookings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Doctor Bookings</h1>
+    <a href="{% url 'doctor_booking_create' %}" class="button is-primary">Book Doctor</a>
+    <ul>
+        {% for booking in bookings %}
+        <li>{{ booking.date }} - {{ booking.doctor }} - <a href="{% url 'doctor_booking_update' booking.id %}">Edit</a> | <a href="{% url 'doctor_booking_delete' booking.id %}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

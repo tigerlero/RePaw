@@ -1,0 +1,16 @@
+<!-- templates/bookings/walker_booking_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Walker Bookings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Walker Bookings</h1>
+    <a href="{% url 'walker_booking_create' %}" class="button is-primary">Book Walker</a>
+    <ul>
+        {% for booking in bookings %}
+        <li>{{ booking.date }} - {{ booking.walker }} - <a href="{% url 'walker_booking_update' booking.id %}">Edit</a> | <a href="{% url 'walker_booking_delete' booking.id %}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
